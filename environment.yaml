@@ -8,7 +8,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python==3.13.5
+  - python==3.11
   - ipykernel
   - pandas
   - nb_conda_kernels
