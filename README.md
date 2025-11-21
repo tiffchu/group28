@@ -13,11 +13,7 @@ The aim of this project is to look at the Iris dataset, and figure out which fea
 ## Running the Data Analysis
 1. Clone this repository to your local machine.
 2. Install dependencies using the supplied file(s).
-3. Execute the main analysis script, with this command:
-   ```
-    iris_predictor.py
-   ```
-4. The findings will be available in the jupyter notebook. 
+3. The findings will be available in the jupyter notebook.
 
 ## Dependencies
 Please look at the environment.yml file for a list of dependencies required to run this project. Can also refer to the conda lock files.

@@ -1,12 +1,9 @@
 # Install the conda environment with the following command:
-# conda env create -f 522-group-28.yml
-# Once you install it, you should be able to see it in your Jupyter Lab.
-# If not, check the documentation here: https://ipython.readthedocs.io/en/stable/install/kernel_install.html
+# conda env create --name <my-env-name> --file <path/to/environment.yml>
 name: "522-group-28"
 
 channels:
   - conda-forge
-  - defaults
 dependencies:
   - python==3.11
   - ipykernel
@@ -16,7 +13,6 @@ dependencies:
   - requests
   - jinja2
   - altair-all
-  - scikit-learn
   - vega_datasets # Example data
   - pip
   - pip:
