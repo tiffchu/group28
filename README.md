@@ -8,7 +8,7 @@
 - Tiffany Chu
 
 ## Project Summary
-The aim of this project is to look at the Iris dataset, and figure out which features are besst placed for the classification of iris species. By leveraging data analysis and machine learning techniques, we seek to accurately predict the species of iris flowers from given measurements.
+The aim of this project is to look at the Iris dataset, and figure out which features are besst placed for the classification of iris species. We hope to answer "Can we predict the Iris species using petal and sepal measurements?". By leveraging data analysis and machine learning techniques, we seek to accurately predict the species of iris flowers from given measurements.
 
 ## Running the Data Analysis
 1. Clone this repository to your local machine.
