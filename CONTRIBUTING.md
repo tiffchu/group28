@@ -1,4 +1,4 @@
-# Contributing to [Project Name]
+# Contributing to IrisSpeciesPredictor
 
 Thank you for your interest in contributing to IrisSpeciesPredictor! We appreciate your help in making this project better.
 
@@ -39,5 +39,5 @@ By contributing, you agree to abide by our [Code of Conduct](https://github.com/
 
 If you have any questions, feel free to reach out to open an issue for assistance.
 
-Thank you for helping make [Project Name] great!
+Thank you for helping make IrisSpeciesPredictor great!
 
