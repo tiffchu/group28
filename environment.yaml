@@ -16,6 +16,7 @@ dependencies:
   - requests
   - jinja2
   - altair-all
+  - scikit-learn
   - vega_datasets # Example data
   - pip
   - pip:
