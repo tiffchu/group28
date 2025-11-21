@@ -1,7 +1,5 @@
-# group28
 
-# Project Title
-title here
+# IrisSpeciesPredictor
 
 ## Contributors
 - Gaurang Ahuja
@@ -10,25 +8,19 @@ title here
 - Tiffany Chu
 
 ## Project Summary
-This project is a .
-The aim is to deliver meaningful insights and visualizations to inform decision-making or further research
+The aim of this project is to look at the Iris dataset, and figure out which features are besst placed for the classification of iris species. By leveraging data analysis and machine learning techniques, we seek to accurately predict the species of iris flowers from given measurements.
 
 ## Running the Data Analysis
 1. Clone this repository to your local machine.
-2. Install dependencies using the supplied requirements.
+2. Install dependencies using the supplied file(s).
 3. Execute the main analysis script, with this command:
    ```
-   python <analysis>.ipynb
+    iris_predictor.py
    ```
-4. Output files will be saved in the `results/` directory.
 
 ## Dependencies
-- Python 3.9
-- pandas
-- numpy
-- scikit-learn
-_See requirements.txt for the full list._
+Please look at the environment.yml file for a list of dependencies required to run this project. Can also refer to the conda lock files.
 
 ## Licenses
-This project is distributed under the licenses listed in `LICENSE.md`:
+This project is distributed under the licenses listed in `LICENSE`:
 - MIT License
