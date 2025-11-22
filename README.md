@@ -16,7 +16,7 @@ The aim of this project is to look at the Iris dataset, and figure out if certai
 
 ## Dependencies
 Please look at the environment.yml file for a list of dependencies required to run this project. Can also refer to the conda lock files.
-Sample command: `conda env create --name <my-env-name> --file <path/to/environment.yml>`
+Command: `conda env create --name environment.yaml --file environment.yaml`
 
 ## Licenses
 This project is distributed under the licenses listed in `LICENSE`:
