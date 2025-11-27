@@ -1,4 +1,5 @@
 # use the miniforge base, make sure you specify a verion
+# 11/27/2025
 FROM condaforge/miniforge3:latest
 
 # copy the lockfile into the container
