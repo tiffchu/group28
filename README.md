@@ -13,21 +13,23 @@ The aim of this project is to look at the Iris dataset, and figure out if certai
 Please look at the environment.yml file for a list of dependencies required to run this project. Can also refer to the conda lock files.
 Sample command: `conda env create --name <my-env-name> --file <path/to/environment.yml>`
 
-## How to use, update, and work with container image
-This project uses a Docker-based computational environment to ensure that all team members have a consistent and reproducible setup.
-The environment is defined by: A Dockerfile (condaforge/miniforge3:latest base image), an environment.yml file, and a docker-compose.yml file for startup
+## How to use container image
+To reproduce the analysis and its results, you can use the provided Docker container image. Follow the steps below:
 
-Build the Container Image
-
-After cloning the repo, to build the image:
+1. Clone the Repository and install Docker 
+2. Build the Container Image:
+- After cloning the repo, to build the image locally, navigate to the project directory and run:
+```bash
+docker compose run #start the container
+```
+Access JupyterLab to work with the analysis notebook in the container:
 
 ```bash
-docker compose up #start the container
+docker compose up
 ```
-Access JupyterLab:
 
-Once the container is running, you can access JupyterLab by navigating to http://localhost:8888 or get the URL in the terminal (looks like http://127.0.0. ...) in your web browser. You can then open the notebook analysis file to run the analysis.
-```
+Once the container is running, you can access JupyterLab by navigating to the URL in the terminal (looks like http://127.0.0.1:8888/lab?token= ...) in your web browser. You can then open the notebook analysis file to run the analysis.
+```bash
 docker compose down #stop the container
 ```
 
