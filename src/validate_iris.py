@@ -136,6 +136,32 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
     except pa.errors.SchemaErrors as err:
         print("Validation FAILED: Missingness exceeds threshold! \n May want to consider using SimpleImputer along with other transformations when training the model.")
 
+    #Target–feature correlations
+    feature = df.drop("species")
+    correlation_tar = feature.corrwith(df["species"], method="pearson")
+    for feature, corr in correlation_tar.items():
+        if abs(corr) > 0.95:
+            raise ValueError(
+                f"Feature {feature} has way to high correlation with the target species: {corr}")
+    print("Target-feature correlations is in an acceptable range")
+
+    #feature-feature correlations
+    num_col = list(feature.columns)
+
+    for i in range(len(num_col)):
+        for j in range(i+1, len(num_col)):
+            col1 = num_col[i]
+            col2 = num_col[j]
+
+            correlation_feat = feature[col1].corr(feature[col2])
+
+        if abs(corr) > 0.95:
+            raise ValueError(
+                f"Features '{col1}' and '{col2}' are too correlated: {correlation_feat}"
+            )
+
+    print("Feature-feature correlations is in an acceptable range")
+
     return df
 
 
