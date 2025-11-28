@@ -2,8 +2,6 @@ import pandas as pd
 import pandera.pandas as pa
 from pandera import Column, Check
 import numpy as np
-import warnings
-
 
 class IrisPreSplitSchema(pa.DataFrameModel):
     sepal_length: float = pa.Field(ge=0, le=10, nullable=False)
@@ -49,6 +47,10 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
     3. Duplicate rows are removed
     4. Species column has only allowed levels: 'setosa', 'versicolor', 'virginica'
     5. Target variable distribution sanity (warns if any species < 10% of dataset)
+    6. Check for outlier or anomalous values
+    7. Check whether the proportion of missing data is higher than the threshold
+    8. Correlation between target and explanatory features to avoid ovefitting or data leakage
+    9. Correlation between explanatory features to avoid multicollinearity or redundant feature
     """
 
     df = IrisPreSplitSchema.validate(df)
