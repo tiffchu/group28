@@ -110,7 +110,7 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
                 Check(lambda s: check_zscore(s), error=f"{col} has Z-score outliers"),
                 Check(lambda s: check_iqr(s), error=f"{col} has IQR outliers")
             ]
-        ) for col in list(df.columns)
+        ) for col in df.select_dtypes(include='float').columns
     })
 
     try:
