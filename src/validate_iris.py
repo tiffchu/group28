@@ -1,7 +1,8 @@
 import pandas as pd
 import pandera.pandas as pa
-from pandera import Check
+from pandera import Column, Check
 import numpy as np
+import warnings
 
 
 class IrisPreSplitSchema(pa.DataFrameModel):
@@ -57,13 +58,15 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
     if empty_rows > 0:
         raise ValueError(f"Found {empty_rows} completely empty rows")
     print("No empty rows")
-
+    
+    total_rows = df.shape[0]
     duplicate_count = df.duplicated().sum()
     if duplicate_count > 0:
-        print(f"Found {duplicate_count} duplicate rows. Dropping them.")
+        warnings.warn(f"Validation FAILED: Found {duplicate_count} duplicate rows. They will be dropped. \nYour dataset now have {total_rows - duplicate_count}.")
         df = df.drop_duplicates()
     else:
         print("No duplicate rows")
+    
 
     species_levels = df["species"].unique()
     expected_levels = ["setosa", "versicolor", "virginica"]
@@ -73,8 +76,63 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
 
     target_counts = df["species"].value_counts(normalize=True)
     if (target_counts < 0.1).any():
-        print(f"Warning: Some species underrepresented:\n{target_counts}")
+        warnings.warn(f"Validation FAILED: Some species underrepresented:\n{target_counts}")
     else:
         print("Target variable distribution looks reasonable")
 
+    ##detect outliers
+
+    # Z-score outlier check (helper function))
+    def check_zscore(series: pd.Series, threshold: float = 3.0) -> pd.Series:
+        """
+        Returns True for each value that is NOT an outlier by Z-score
+        """
+        z = (series - series.mean()) / series.std()
+        return z.abs() <= threshold
+
+    def check_iqr(series: pd.Series, factor: float = 1.5) -> pd.Series:
+        """
+        Returns True for each value that is NOT an outlier by IQR
+        """
+        q1 = series.quantile(0.25)
+        q3 = series.quantile(0.75)
+        iqr = q3 - q1
+        return (series >= q1 - factor*iqr) & (series <= q3 + factor*iqr)
+
+    #outlier check
+    schema = pa.DataFrameSchema({
+        col: Column(
+            dtype=float,
+            checks=[
+                Check(lambda s: check_zscore(s), error=f"{col} has Z-score outliers"),
+                Check(lambda s: check_iqr(s), error=f"{col} has IQR outliers")
+            ]
+        ) for col in list(df.columns)
+    })
+
+    try:
+        validated_df = schema.validate(df, lazy=True)
+        print("Validation passed: No outliers detected!")
+    except pa.errors.SchemaErrors as err:
+        warnings.warn("Validation FAILED: Outliers detected!\n Might want to consider using StandardScaler transformation.")
+        
+
+    ## Missingness not beyond expected threshold
+    threshold = 0.05
+    schema = pa.DataFrameSchema({
+        col: Column(
+            dtype=df[col].dtype if col != "target" else int,
+            checks=[Check(lambda s: s.isna().mean() < threshold,
+                        error=f"Missingness exceeds allowed threshold of {threshold:.2f}")]
+        )
+        for col in df.columns
+    })
+    try:
+        validated_df = schema.validate(df, lazy=True)
+        print("Validation passed: Missingness is within allowed limits.")
+    except pa.errors.SchemaErrors as err:
+        print("Validation FAILED: Missingness exceeds threshold! \n May want to consider using SimpleImputer along with other transformations when training the model.")
+
     return df
+
+
