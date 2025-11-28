@@ -145,7 +145,7 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
     correlation_tar = feature_df.corrwith(target_species, method="pearson")
     for feat, corr in correlation_tar.items():
         if abs(corr) > 0.95:
-            print(f"Feature {feat} has way to high correlation with the target column (species) and could lead to ovefitting or data leakage: {corr}")
+            print(f"Warning: Feature {feat} has way to high correlation with the target column (species) and could lead to ovefitting or data leakage: {corr}")
             corrfeat_result.append('problem')
 
     if len(corrfeat_result) == 0:
@@ -160,7 +160,7 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
             correlation_feat = feature_df[num_col[i]].corr(feature_df[num_col[j]])
 
             if abs(correlation_feat) > 0.95:
-                print(f"Features '{num_col[i]}' and '{num_col[j]}' are too correlated and could lead to multicollinearity or repeat feature: {correlation_feat}")
+                print(f"Warning: Features '{num_col[i]}' and '{num_col[j]}' are too correlated and could lead to multicollinearity or repeat feature: {correlation_feat}")
                 corr_corr_result.append("problem")
 
     if len(corr_corr_result) == 0:
