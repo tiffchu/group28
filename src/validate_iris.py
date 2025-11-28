@@ -80,8 +80,6 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
     else:
         print("Target variable distribution looks reasonable")
 
-    ##detect outliers
-
     # Z-score outlier check (helper function))
     def check_zscore(series: pd.Series, threshold: float = 3.0) -> pd.Series:
         """
@@ -131,7 +129,7 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
         validated_df = schema.validate(df, lazy=True)
         print("Validation passed: Missingness is within allowed limits.")
     except pa.errors.SchemaErrors as err:
-        print("Validation FAILED: Missingness exceeds threshold! \n May want to consider using SimpleImputer along with other transformations when training the model.")
+        warnings.warn("Validation FAILED: Missingness exceeds threshold! \n May want to consider using SimpleImputer along with other transformations when training the model.")
 
     return df
 
