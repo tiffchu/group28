@@ -117,7 +117,7 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
         validated_df = schema.validate(df, lazy=True)
         print("No outliers detected!")
     except pa.errors.SchemaErrors as err:
-        print("Validation FAILED: Outliers detected!\n Might want to consider using StandardScaler transformation.")
+        print("Validation FAILED: Outliers detected! Might want to consider using StandardScaler transformation.")
         
 
     ## Checking missingness not beyond expected threshold
