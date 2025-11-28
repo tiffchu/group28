@@ -137,31 +137,32 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
         print("Validation FAILED: Missingness exceeds threshold! \n May want to consider using SimpleImputer along with other transformations when training the model.")
 
     #Target–feature correlations
+    corrfeat_result = []
     target_species = df["species"].astype("category").cat.codes
     feature_df = df.drop(columns = "species")
     correlation_tar = feature_df.corrwith(target_species, method="pearson")
     for feat, corr in correlation_tar.items():
         if abs(corr) > 0.95:
-            raise ValueError(
-                f"Feature {feat} has way to high correlation with the target column (species): {corr}")
-    print("Target-feature correlations is in an acceptable range")
+            print(f"Feature {feat} has way to high correlation with the target column (species) and could lead to ovefitting or data leakage: {corr}")
+            corrfeat_result.append('problem')
+
+    if len(corrfeat_result) == 0:
+        print("Target-feature correlations is in an acceptable range")
 
     #feature-feature correlations
+    corr_corr_result = []
     num_col = list(feature_df.columns)
 
     for i in range(len(num_col)):
         for j in range(i+1, len(num_col)):
-            col1 = num_col[i]
-            col2 = num_col[j]
-
-            correlation_feat = feature_df[col1].corr(feature_df[col2])
+            correlation_feat = feature_df[num_col[i]].corr(feature_df[num_col[j]])
 
             if abs(correlation_feat) > 0.95:
-                raise ValueError(
-                    f"Features '{col1}' and '{col2}' are too correlated: {correlation_feat}"
-                )
+                print(f"Features '{num_col[i]}' and '{num_col[j]}' are too correlated and could lead to multicollinearity or repeat feature: {correlation_feat}")
+                corr_corr_result.append("problem")
 
-    print("Feature-feature correlations is in an acceptable range")
+    if len(corr_corr_result) == 0:
+        print("Feature-feature correlations is in an acceptable range")
 
     return df
 
