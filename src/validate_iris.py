@@ -115,7 +115,7 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
 
     try:
         validated_df = schema.validate(df, lazy=True)
-        print("Validation passed: No outliers detected!")
+        print("No outliers detected!")
     except pa.errors.SchemaErrors as err:
         print("Validation FAILED: Outliers detected!\n Might want to consider using StandardScaler transformation.")
         
@@ -132,7 +132,7 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
     })
     try:
         validated_df = schema.validate(df, lazy=True)
-        print("Validation passed: Missingness is within allowed limits.")
+        print("Missingness is within allowed limits.")
     except pa.errors.SchemaErrors as err:
         print("Validation FAILED: Missingness exceeds threshold! \n May want to consider using SimpleImputer along with other transformations when training the model.")
 
