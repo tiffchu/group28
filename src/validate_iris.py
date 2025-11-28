@@ -62,9 +62,10 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
     
     ##Checking for duplicates
     total_rows = df.shape[0]
+    total_columns = df.shape[1]
     duplicate_count = df.duplicated().sum()
     if duplicate_count > 0:
-        warnings.warn(f"Validation FAILED: Found {duplicate_count} duplicate rows. They will be dropped. \nYour dataset now have {total_rows - duplicate_count}.")
+        print(f"Validation FAILED: Found {duplicate_count} duplicate rows. They will be dropped. \nThe dataset now have {total_rows - duplicate_count} rows and {total_columns} columns.")
         df = df.drop_duplicates()
     else:
         print("No duplicate rows")
@@ -79,7 +80,7 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
     #Checking Target/response variable follows expected distribution 
     target_counts = df["species"].value_counts(normalize=True)
     if (target_counts < 0.1).any():
-        warnings.warn(f"Validation FAILED: Some species underrepresented:\n{target_counts}")
+        print(f"Validation FAILED: Some species underrepresented:\n{target_counts}")
     else:
         print("Target variable distribution looks reasonable")
 
@@ -116,7 +117,7 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
         validated_df = schema.validate(df, lazy=True)
         print("Validation passed: No outliers detected!")
     except pa.errors.SchemaErrors as err:
-        warnings.warn("Validation FAILED: Outliers detected!\n Might want to consider using StandardScaler transformation.")
+        print("Validation FAILED: Outliers detected!\n Might want to consider using StandardScaler transformation.")
         
 
     ## Checking missingness not beyond expected threshold
@@ -133,7 +134,7 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
         validated_df = schema.validate(df, lazy=True)
         print("Validation passed: Missingness is within allowed limits.")
     except pa.errors.SchemaErrors as err:
-        warnings.warn("Validation FAILED: Missingness exceeds threshold! \n May want to consider using SimpleImputer along with other transformations when training the model.")
+        print("Validation FAILED: Missingness exceeds threshold! \n May want to consider using SimpleImputer along with other transformations when training the model.")
 
     return df
 
