@@ -2,8 +2,6 @@ import pandas as pd
 import pandera.pandas as pa
 from pandera import Column, Check
 import numpy as np
-import warnings
-
 
 class IrisPreSplitSchema(pa.DataFrameModel):
     sepal_length: float = pa.Field(ge=0, le=10, nullable=False)
@@ -49,6 +47,10 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
     3. Duplicate rows are removed
     4. Species column has only allowed levels: 'setosa', 'versicolor', 'virginica'
     5. Target variable distribution sanity (warns if any species < 10% of dataset)
+    6. Check for outlier or anomalous values
+    7. Check whether the proportion of missing data is higher than the threshold
+    8. Correlation between target and explanatory features to avoid ovefitting or data leakage
+    9. Correlation between explanatory features to avoid multicollinearity or redundant feature
     """
 
     df = IrisPreSplitSchema.validate(df)
@@ -135,6 +137,34 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
         print("Missingness is within allowed limits.")
     except pa.errors.SchemaErrors as err:
         print("Validation FAILED: Missingness exceeds threshold! \n May want to consider using SimpleImputer along with other transformations when training the model.")
+
+    #Target–feature correlations
+    corrfeat_result = []
+    target_species = df["species"].astype("category").cat.codes
+    feature_df = df.drop(columns = "species")
+    correlation_tar = feature_df.corrwith(target_species, method="pearson")
+    for feat, corr in correlation_tar.items():
+        if abs(corr) > 0.95:
+            print(f"Warning: Feature {feat} has way to high correlation with the target column (species) and could lead to ovefitting or data leakage: {corr}")
+            corrfeat_result.append('problem')
+
+    if len(corrfeat_result) == 0:
+        print("Target-feature correlations is in an acceptable range")
+
+    #feature-feature correlations
+    corr_corr_result = []
+    num_col = list(feature_df.columns)
+
+    for i in range(len(num_col)):
+        for j in range(i+1, len(num_col)):
+            correlation_feat = feature_df[num_col[i]].corr(feature_df[num_col[j]])
+
+            if abs(correlation_feat) > 0.95:
+                print(f"Warning: Features '{num_col[i]}' and '{num_col[j]}' are too correlated and could lead to multicollinearity or repeat feature: {correlation_feat}")
+                corr_corr_result.append("problem")
+
+    if len(corr_corr_result) == 0:
+        print("Feature-feature correlations is in an acceptable range")
 
     return df
 
