@@ -137,12 +137,13 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
         print("Validation FAILED: Missingness exceeds threshold! \n May want to consider using SimpleImputer along with other transformations when training the model.")
 
     #Target–feature correlations
+    target_species = df["species"].astype("category").cat.codes
     feature_df = df.drop(columns = "species")
-    correlation_tar = feature_df.corrwith(df["species"], method="pearson")
+    correlation_tar = feature_df.corrwith(target_species, method="pearson")
     for feat, corr in correlation_tar.items():
         if abs(corr) > 0.95:
             raise ValueError(
-                f"Feature {feat} has way to high correlation with the target species: {corr}")
+                f"Feature {feat} has way to high correlation with the target column (species): {corr}")
     print("Target-feature correlations is in an acceptable range")
 
     #feature-feature correlations
