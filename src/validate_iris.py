@@ -54,11 +54,13 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
     df = IrisPreSplitSchema.validate(df)
     print("Schema validation passed (columns + types + basic ranges)")
 
+    ##Checking for empty rows
     empty_rows = (df == "").all(axis=1).sum()
     if empty_rows > 0:
         raise ValueError(f"Found {empty_rows} completely empty rows")
     print("No empty rows")
     
+    ##Checking for duplicates
     total_rows = df.shape[0]
     duplicate_count = df.duplicated().sum()
     if duplicate_count > 0:
@@ -67,19 +69,21 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
     else:
         print("No duplicate rows")
     
-
+    #Checking for target Correct category levels 
     species_levels = df["species"].unique()
     expected_levels = ["setosa", "versicolor", "virginica"]
     if not set(species_levels).issubset(set(expected_levels)):
         raise ValueError(f"Unexpected species levels found: {species_levels}")
     print("Species categories OK")
-
+    
+    #Checking Target/response variable follows expected distribution 
     target_counts = df["species"].value_counts(normalize=True)
     if (target_counts < 0.1).any():
         warnings.warn(f"Validation FAILED: Some species underrepresented:\n{target_counts}")
     else:
         print("Target variable distribution looks reasonable")
 
+    #Checking outlier or anomalous values
     # Z-score outlier check (helper function))
     def check_zscore(series: pd.Series, threshold: float = 3.0) -> pd.Series:
         """
@@ -115,7 +119,7 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
         warnings.warn("Validation FAILED: Outliers detected!\n Might want to consider using StandardScaler transformation.")
         
 
-    ## Missingness not beyond expected threshold
+    ## Checking missingness not beyond expected threshold
     threshold = 0.05
     schema = pa.DataFrameSchema({
         col: Column(
