@@ -17,5 +17,5 @@ dependencies:
       - scikit-learn
       - requests
       - jinja2
-      - altair-all
+      - altair
 
