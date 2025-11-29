@@ -10,28 +10,37 @@
 The aim of this project is to look at the Iris dataset, and figure out if certain features are useful for the classification of iris species. We hope to answer "Can we predict the Iris species using petal and sepal measurements?". By leveraging data analysis and machine learning techniques, we seek to accurately predict the species of iris flowers from given measurements.
 
 ## Dependencies
-Please look at the environment.yml file for a list of dependencies required to run this project. Can also refer to the conda lock files.
+Please look at the environment.yml file for a list of dependencies required to run this project. You can also refer to the `conda-lock.yml` file.
 Sample command: `conda env create --name <my-env-name> --file <path/to/environment.yml>`
 
-## How to use container image
-To reproduce the analysis and its results, you can use the provided Docker container image. Follow the steps below:
+## Prerequisites
+Before running the project in Docker, ensure you have:
+- Docker installed
 
-1. Clone the Repository and install Docker 
-2. Build the Container Image:
-- After cloning the repo, to build the image locally, navigate to the project directory and run:
-```bash
-docker compose run #start the container
-```
-Access JupyterLab to work with the analysis notebook in the container:
+## Using the Docker Container
+You can reproduce the analysis and run the notebook in a pre configured Docker container.
 
-```bash
-docker compose up
-```
+1. Clone the repository:
+    - `git clone git@github.com:tiffchu/group28.git`
+    - `cd group28`
 
-Once the container is running, you can access JupyterLab by navigating to the URL in the terminal (looks like http://127.0.0.1:8888/lab?token= ...) in your web browser. You can then open the notebook analysis file to run the analysis.
-```bash
-docker compose down #stop the container
-```
+2. Pull the latest Docker image
+    - `docker-compose pull`
+This ensures you are using the latest container image built and tested by the team.
+
+3. Start the container and JupyterLab
+    - `docker-compose up`
+This will start the container, activate the `dockerlock` environment and launch JupyterLab inside the container
+
+4. Open JupyterLab in your browser at
+    - `http://localhost:8888/lab`
+
+5. Open and run notebooks
+    1. In JupyterLab, open the `[text](iris_predictor_report.ipynb)`
+    2. Run all cells
+
+6. Stop the container
+Return to the terminal where `docker-compose up` is running and press `Ctrl+C`
 
 ## Licenses
 This project is distributed under the licenses listed in `LICENSE`:
