@@ -7,7 +7,7 @@
 - Tiffany Chu
 
 ## Project Summary
-The aim of this project is to look at the Iris dataset, and figure out if certain features are useful for the classification of iris species. We hope to answer "Can we predict the Iris species using petal and sepal measurements?". By leveraging data analysis and machine learning techniques, we seek to accurately predict the species of iris flowers from given measurements.
+The aim of this project is to look at the Iris dataset [link](https://archive.ics.uci.edu/dataset/53/iris), and figure out if certain features are useful for the classification of iris species. We hope to answer "Can we predict the Iris species using petal and sepal measurements?". By leveraging data analysis and machine learning techniques, we seek to accurately predict the species of iris flowers from given measurements.
 
 ## Dependencies
 Please look at the environment.yml file for a list of dependencies required to run this project. You can also refer to the `conda-lock.yml` file.
@@ -36,7 +36,7 @@ This will start the container, activate the `dockerlock` environment and launch 
     - `http://localhost:8888/lab`
 
 5. Open and run notebooks
-    1. In JupyterLab, open the `[text](iris_predictor_report.ipynb)`
+    1. In JupyterLab, open the `iris_predictor_report.ipynb`
     2. Run all cells
 
 6. Stop the container
@@ -44,4 +44,7 @@ Return to the terminal where `docker-compose up` is running and press `Ctrl+C`
 
 ## Licenses
 This project is distributed under the licenses listed in `LICENSE`:
-- MIT License
+
+This project utilizes the Iris Dataset from the UCI Machine Learning Repository. The dataset is provided by the original authors and UCI; please refer to the dataset’s page on the UCI Machine Learning Repository for the official licensing and citation instructions. Citations are located in the `iris_predictor_report.ipynb` file. Use of the Iris data in this project is intended to comply with those terms by providing appropriate credit to the dataset creators and to UCI.
+
+The project report and documentation contained in this repository are licensed under the Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0) License. This means you are free to share and adapt the report for non‑commercial purposes, as long as you provide attribution, indicate if changes were made, and distribute any derivatives under the same license.
