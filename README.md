@@ -24,9 +24,9 @@ You can reproduce the analysis and run the notebook in a pre configured Docker c
     - `git clone git@github.com:tiffchu/group28.git`
     - `cd group28`
 
-2. Pull the latest Docker image
-    - `docker-compose pull`
-This ensures you are using the latest container image built and tested by the team.
+2. Build the Docker image
+    - `docker-compose build`
+This creates the `dockerlock` image with all required packages installed.
 
 3. Start the container and JupyterLab
     - `docker-compose up`
