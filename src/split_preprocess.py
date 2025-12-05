@@ -21,7 +21,7 @@ def main(rawdata):
 
     train_df.to_csv(os.path.join(output_dir, "iris_train.csv"), index=False)
     test_df.to_csv(os.path.join(output_dir, "iris_test.csv"), index=False)
-    print('The train and test data are saved in ../data/processed folder')
+    print(f'The train and test data are saved in {output_dir} folder')
     
 if __name__ == '__main__':
     main()
