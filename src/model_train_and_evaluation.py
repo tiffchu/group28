@@ -75,6 +75,43 @@ def main(training_data, test_data, models_to, tables_to):
     #save knn cross val result to table
     knn_result.to_csv(os.path.join(tables_to, "knn_results.csv"), index=False)
 
+    decision_tree = ds_random_search.best_estimator_
+    knn = knn_random_search.best_estimator_
+
+    #save knn_classifier_model into the results/models file
+    with open(os.path.join(models_to, "decision_tree.pickle"), 'wb') as f:
+        pickle.dump(knn_random_search, f)
+
+    #save decision_tree model results/models file
+    with open(os.path.join(models_to, "knn.pickle"), 'wb') as f:
+        pickle.dump(ds_random_search, f)
+
+    #Test on test set for both Classifcation mode
+
+    print("Decision tree model accuracy on test set: ", decision_tree.score(X_test, y_test))
+
+    cm_ds = pd.DataFrame(
+        confusion_matrix(y_test, decision_tree.predict(X_test)),
+        index=decision_tree.classes_, 
+        columns=decision_tree.classes_
+    )
+    print("Decision tree model confusion matrix predict on test set:")
+    print(cm_ds)
+
+    cm_ds.to_csv(os.path.join(tables_to, "confusion_matrix_ds.csv"))
+
+    print('\n')
+
+    print("KNN model accuracy on test set: ", knn.score(X_test, y_test))
+    cm_knn = pd.DataFrame(
+        confusion_matrix(y_test, knn.predict(X_test)),
+        index=knn.classes_, 
+        columns=knn.classes_
+    )
+    print("K-NN confusion matrix predict on test set:")
+    print(cm_knn)
+
+    cm_knn.to_csv(os.path.join(tables_to, "confusion_matrix_knn.csv"))
 
 if __name__ == '__main__':
     main()
