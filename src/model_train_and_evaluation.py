@@ -33,6 +33,25 @@ def main(training_data, test_data, models_to, tables_to):
 
     scaling = StandardScaler()
 
+    #Decision Tree
+
+    param_grid = {
+        "decisiontreeclassifier__max_depth": range(1,20)
+        }
+
+    pipe = make_pipeline(scaling, DecisionTreeClassifier())
+    ds_random_search = RandomizedSearchCV(
+                pipe, param_distributions=param_grid, n_jobs=-1, n_iter=50, cv=5, return_train_score=True, random_state=123
+        )
+
+    ds_random_search.fit(X_train, y_train)
+    
+    ds_result = (pd.DataFrame(ds_random_search.cv_results_)[['mean_fit_time', 'mean_score_time', 'param_decisiontreeclassifier__max_depth', 
+                                                            'mean_test_score', 'mean_train_score']].sort_values('mean_test_score', ascending = False).head() )
+    
+    #save knn cross val result to table
+    ds_result.to_csv(os.path.join(tables_to, "knn_results.csv"), index=False)
+
 if __name__ == '__main__':
     main()
 
