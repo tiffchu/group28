@@ -16,14 +16,11 @@ def main(url):
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
     try:
-        data.to_csv('../data/raw/iris.csv')
+        data.to_csv(output_path, index=False)
         print('The Iris data is saved in ../data/raw directory.')
 
     except Exception as e:
-        os.makedirs('../data/raw/')
-        data.to_csv('../data/raw/iris.csv')
         print("Failed to download or save data:", e)
-        print('The Iris data is saved in ../data/raw directory.')
         
 
 if __name__ == '__main__':
