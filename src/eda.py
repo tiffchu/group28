@@ -5,11 +5,11 @@ import os
 
 
 @click.command()
-@click.option('--training-data', type=str, help="Path to processed training data", flag_value = '../data/processed/iris_train.csv')
-@click.option('--plot-to', type=str, help="Path to directory where the plot will be written to", flag_value = '../results/figures/')
+@click.option('--training-data', type=str, help="Path to processed training data", default = '../data/processed/iris_train.csv', show_default=True)
+@click.option('--plot-to', type=str, help="Path to directory where the plot will be written to", default = '../results/figures/', show_default=True)
 def main(training_data, plot_to):
     ''' 
-    
+    Generate EDA plots and save them in results/figure folder.
     '''
     train_data = pd.read_csv(training_data)
 
