@@ -3,7 +3,8 @@ import pandas as pd
 import os
 
 @click.command()
-@click.option('--url', type=str, help="URL of dataset to be downloaded", flag_value= 'https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv')
+@click.option('--url', type=str, help="URL of dataset to be downloaded", 
+default= "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv")
 
 def main(url):
     """Downloads data csv data from the web to a local filepath and extracts it."""
