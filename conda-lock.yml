@@ -13,11 +13,11 @@
 version: 1
 metadata:
   content_hash:
-    linux-64: e7ff209d2216396c1c6ec97a205488b2f874968cb6244d0d04762432c967a3e8
-    osx-64: fabf8e2c1f45b71deee6b7a4bd4b7a5064616144aa4175b47aa3740a74981d58
-    osx-arm64: 1add726f18f55811bd61d82daf2a9a73464c4dc9442a9fd192645234a02f3cb9
-    win-64: 8ad551f52a89eba05be42ae7fef29985151defd8b6a8f6665625e9750605c2da
-    linux-aarch64: af3e71034c8012052b415dd0bafe8e3186d8608337ec37897a586a3f043f8db9
+    linux-64: 5a0dedac3184ca40b5d54d793f51e81be9f44922591c7da00be5316b093c130c
+    osx-64: 37c9a01638bbf8ad1ffc8b8dffdfaf8551ebdb280d18781d987c06f787ded159
+    osx-arm64: c6c8ba7623a466ee9d9ac5ddec73d3c0530afc44b67f4841b3b069fdd658c9f9
+    win-64: e0e6dc24826b8ff0a2f1899ad0ce74e767ca50776490f3733a308e51bc684e39
+    linux-aarch64: e62c4d5c98a78ac791fbcc690e9e878e5b79cd740688bda7735cbb7bedb752f6
   channels:
   - url: conda-forge
     used_env_vars: []
@@ -11092,5 +11092,55 @@ package:
   url: https://files.pythonhosted.org/packages/e6/9f/ca52771fe972e0dcc5167fedb609940e01516066938ff2ee28b273ae4f29/vega_datasets-0.9.0-py3-none-any.whl
   hash:
     sha256: 3d7c63917be6ca9b154b565f4779a31fedce57b01b5b9d99d8a34a7608062a1d
+  category: main
+  optional: false
+- name: vl-convert-python
+  version: 1.8.0
+  manager: pip
+  platform: linux-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/a7/6b/48f6d47a92eaf6f0dd235146307a7eb0d179b78d2faebc53aca3f1e49177/vl_convert_python-1.8.0-cp37-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+  hash:
+    sha256: b51264998e8fcc43dbce801484a950cfe6513cdc4c46b20604ef50989855a617
+  category: main
+  optional: false
+- name: vl-convert-python
+  version: 1.8.0
+  manager: pip
+  platform: linux-aarch64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/09/fa/1dd944c9e9898e59e31c385bdce215aca543acc555de20b8bf4dc60ddb89/vl_convert_python-1.8.0-cp37-abi3-manylinux_2_17_aarch64.manylinux2014_aarch64.whl
+  hash:
+    sha256: 3388e3913287867b3553c10f81ca2d85268216a5a75e7c71b9c1b59887c1977e
+  category: main
+  optional: false
+- name: vl-convert-python
+  version: 1.8.0
+  manager: pip
+  platform: osx-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/22/5a/9dca7d8ff56e82c298e9ef381cfc803e262b85b7c59f2515d0e9f81a75b6/vl_convert_python-1.8.0-cp37-abi3-macosx_10_12_x86_64.whl
+  hash:
+    sha256: f663317fc280b07553534195c1e31c4ca882d9c8601430211b078196db5ed227
+  category: main
+  optional: false
+- name: vl-convert-python
+  version: 1.8.0
+  manager: pip
+  platform: osx-arm64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/42/e2/325e6b5895482b2534e7462c012f237c66ffb02fb3af45eec0accab2f8d4/vl_convert_python-1.8.0-cp37-abi3-macosx_11_0_arm64.whl
+  hash:
+    sha256: 81f6380019ceadf070a79f85aa624475a6568093f70de0e151a32e91ecbcaacf
+  category: main
+  optional: false
+- name: vl-convert-python
+  version: 1.8.0
+  manager: pip
+  platform: win-64
+  dependencies: {}
+  url: https://files.pythonhosted.org/packages/f8/6f/29dce05f9167e3a01ab74d79eeadd531bc24cf59e3a7fc3736af476ca431/vl_convert_python-1.8.0-cp37-abi3-win_amd64.whl
+  hash:
+    sha256: 9f1146b791ed27916f54c45e1d66af53a40eb26e5aaea1892f33eb9a935039ab
   category: main
   optional: false
