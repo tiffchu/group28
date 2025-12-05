@@ -6,7 +6,7 @@ import os
 
 @click.command()
 
-@click.option('--rawdata', type=str, help="Path to raw data", default = '../data/raw/iris.csv')
+@click.option('--rawdata', type=str, help="Path to raw data", flag_value='../data/raw/iris.csv')
 def main(rawdata):
     """Perform data validation on raw data, clean up the data column names, and split the data into train and test data set"""
     df = pd.read_csv(rawdata)
