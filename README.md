@@ -2,11 +2,11 @@
 - Contributors: Gaurang Ahuja, Wai Yan Lee, Uyen Nguyen Nguyen, Tiffany Chu
 
 ## About
-The aim of this project is to explore the [Iris dataset](https://archive.ics.uci.edu/dataset/53/iris) and determine whether certain features are useful classify iris species. We hope to answer "Can we predict the Iris species using petal and sepal measurements?". By leveraging data analysis and machine learning techniques, we seek to accurately predict the species of iris flowers from given measurements.
+The aim of this project is to explore the [Iris dataset](https://archive.ics.uci.edu/dataset/53/iris) and determine whether certain features are useful to classify iris species. We hope to answer "Can we predict the Iris species using petal and sepal measurements?". By leveraging data analysis and machine learning techniques, we seek to accurately predict the species of iris flowers from given measurements.
 
-Initial analysis revealed that petal length and width, especially for Setosa, are strong predictors as they clearly distinguish species, while Sepal features show less separated. We applied the DecisionTree and KNN classifiers mdoels to evaluate how well the Iris dataset's features predict the species. Our analysis shows that petal measurements are the stringest predictors, specifically petal length vs petal width. 
-both models achieve high accuracy (~93% from the Decision Tree and ~95% from the KNN classifier) with cross-validation confirming the strong performance. Some classification errors occurred between Versicolor and Virginica due to their overlapping characteristics. In conculsion, our analysis provides evidence from both exploratory analysis and machine learning models that petal and sepal measurements do allow accurate classification, validate model performance, and highlight the biological meaning behind feature separability. Moreover, Iris species can be predicted accurately from oetal and sepal measurements, with petal features providing the strongest predictive power. 
-However, there are some limitations associated with our study, some key limitations of the dataset and the related findings include: the dataset contains only 150 samples with 4 numeric features and 3 species classes, which is considered quite small and simple compared to data on other plant species. This limits the complexity of patterns that can be learned and makes it less applicable to more complex classification tasks. Its size also prevents it from being useful for complex machine learning techniques like deep learning, which require larger datasets.
+Initial analysis revealed that petal length and width, especially for Setosa, are strong predictors as they clearly distinguish species, while Sepal features show less separation. We applied the DecisionTree and KNN classifiers mdoels to evaluate how well the Iris dataset's features predict the species. Our analysis shows that petal measurements are the strongest predictors, specifically petal length vs petal width. 
+Both models achieve high accuracy (~93% from the Decision Tree and ~95% from the KNN classifier) with cross-validation confirming the strong performance. Some classification errors occurred between Versicolor and Virginica due to their overlapping characteristics. In conculsion, our analysis provides evidence from both exploratory analysis and machine learning models that petal and sepal measurements do allow accurate classification, validate model performance, and highlight the biological meaning behind feature separability. Moreover, Iris species can be predicted accurately from petal and sepal measurements, with petal features providing the strongest predictive power. 
+However, there are some limitations associated with our study. Some key limitations of the dataset and the related findings include: the dataset contains only 150 samples with 4 numeric features and 3 species classes, which is considered quite small and simple compared to data on other plant species. This limits the complexity of patterns that can be learned and makes it less applicable to more complex classification tasks. Its size also prevents it from being useful for complex machine learning techniques like deep learning, which require larger datasets.
 
 ## Dependencies
 - [Docker](https://www.docker.com/) 
@@ -63,12 +63,12 @@ python download_data.py --url https://raw.githubusercontent.com/mwaskom/seaborn-
 ```
 
 5. Next, run following command to split and preprocess the downloaded data.
-> Note: If no inputs were passed, raw data will be pulled from `../data/raw/iris.csv`. The splitted data will be saved into the `proprocessed` subfolder in `data` folder.
+> Note: If no inputs were passed, raw data will be pulled from `../data/raw/iris.csv`. The split data will be saved into the `proprocessed` subfolder in `data` folder.
 ```
 python split_preprocess.py --rawdata ../data/raw/iris.csv
 ```
 
-6. Next, run the following command to generate EDA plots and save the plot as PNG file to `figure` subfolder in `Results` folder.
+6. Next, run the following command to generate EDA plots and save the plots as PNG file to `figure` subfolder in `Results` folder.
 > Note: If no inputs were passed, train data will be pulled from `../data/processed/` and the plots will be saved to `../results/figures/`
 ```
 python eda.py --training-data ../data/processed/iris_train.csv --plot-to ../results/figures/
@@ -85,7 +85,7 @@ type `Cntrl` + `C` in the terminal where you launched the container, and then ty
 - `conda` (version 23.9.0 or higher)
 - `conda-lock` (version 2.5.7 or higher)
 
-### Adding an new dependency
+### Adding a new dependency
 1. Please look at the `environment.yml` file for a list of dependencies required to run this project. You can also refer to the `conda-lock.yml` file.
 Sample command: `conda env create --name <my-env-name> --file <path/to/environment.yml>`
 2. Run `conda-lock -k explicit --file environment.yml -p linux-64` to update the `conda-linux-64.lock` file.
