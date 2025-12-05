@@ -32,15 +32,14 @@ def main(training_data, test_data, models_to, tables_to):
     X_test = test_df.drop('species', axis=1)
     y_test = test_df['species']
 
-    scaling = StandardScaler()
-
     #Decision Tree
 
     param_grid = {
         "decisiontreeclassifier__max_depth": range(1,20)
         }
 
-    pipe = make_pipeline(scaling, DecisionTreeClassifier())
+    pipe = make_pipeline(StandardScaler(), DecisionTreeClassifier())
+
     ds_random_search = RandomizedSearchCV(
                 pipe, param_distributions=param_grid, n_jobs=-1, n_iter=50, cv=5, return_train_score=True, random_state=123
         )
@@ -51,18 +50,14 @@ def main(training_data, test_data, models_to, tables_to):
                                                             'mean_test_score', 'mean_train_score']].sort_values('mean_test_score', ascending = False).head() )
     
     #save knn cross val result to table
-    ds_result.to_csv(os.path.join(tables_to, "knn_results.csv"), index=False)
-
-    #K-NN classifer
-    param_grid = {
-        "n_neighbors": range(1,20),
-        }
+    ds_result.to_csv(os.path.join(tables_to, "ds_results.csv"), index=False)
 
     param_grid = {
         "kneighborsclassifier__n_neighbors": range(1,20)
         }
 
-    pipe = make_pipeline(scaling, KNeighborsClassifier())
+    pipe = make_pipeline(StandardScaler(), KNeighborsClassifier())
+
     knn_random_search = RandomizedSearchCV(
                 pipe, param_distributions=param_grid, n_jobs=-1, n_iter=50, cv=5, return_train_score=True, random_state=123
         )
