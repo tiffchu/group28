@@ -1,4 +1,3 @@
-
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
@@ -17,6 +16,8 @@ import os
 @click.option('--tables-to', type=str, help="Path to directory where evaluation tables will be written to",default="../results/tables")
 
 def main(training_data, test_data, models_to, tables_to):
+
+    #this script is for training model on train set and evaluate model on both train and test set
 
     #create folder for models and result tables (like confusion matrix, train and test score tables)
     os.makedirs(models_to, exist_ok=True)
@@ -53,7 +54,6 @@ def main(training_data, test_data, models_to, tables_to):
     ds_result.to_csv(os.path.join(tables_to, "knn_results.csv"), index=False)
 
     #K-NN classifer
-
     param_grid = {
         "n_neighbors": range(1,20),
         }
@@ -115,4 +115,3 @@ def main(training_data, test_data, models_to, tables_to):
 
 if __name__ == '__main__':
     main()
-
