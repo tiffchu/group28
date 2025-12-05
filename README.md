@@ -1,46 +1,98 @@
 # IrisSpeciesPredictor
+- Contributors: Gaurang Ahuja, Wai Yan Lee, Uyen Nguyen Nguyen, Tiffany Chu
 
-## Contributors
-- Gaurang Ahuja
-- Wai Yan Lee
-- Uyen Nguyen Nguyen
-- Tiffany Chu
+## About
+The aim of this project is to explore the [Iris dataset](https://archive.ics.uci.edu/dataset/53/iris) and determine whether certain features are useful classify iris species. We hope to answer "Can we predict the Iris species using petal and sepal measurements?". By leveraging data analysis and machine learning techniques, we seek to accurately predict the species of iris flowers from given measurements.
 
-## Project Summary
-The aim of this project is to look at the Iris dataset [link](https://archive.ics.uci.edu/dataset/53/iris), and figure out if certain features are useful for the classification of iris species. We hope to answer "Can we predict the Iris species using petal and sepal measurements?". By leveraging data analysis and machine learning techniques, we seek to accurately predict the species of iris flowers from given measurements.
+Initial analysis revealed that petal length and width, especially for Setosa, are strong predictors as they clearly distinguish species, while Sepal features show less separated. We applied the DecisionTree and KNN classifiers mdoels to evaluate how well the Iris dataset's features predict the species. Our analysis shows that petal measurements are the stringest predictors, specifically petal length vs petal width. 
+both models achieve high accuracy (~93% from the Decision Tree and ~95% from the KNN classifier) with cross-validation confirming the strong performance. Some classification errors occurred between Versicolor and Virginica due to their overlapping characteristics. In conculsion, our analysis provides evidence from both exploratory analysis and machine learning models that petal and sepal measurements do allow accurate classification, validate model performance, and highlight the biological meaning behind feature separability. Moreover, Iris species can be predicted accurately from oetal and sepal measurements, with petal features providing the strongest predictive power. 
+However, there are some limitations associated with our study, some key limitations of the dataset and the related findings include: the dataset contains only 150 samples with 4 numeric features and 3 species classes, which is considered quite small and simple compared to data on other plant species. This limits the complexity of patterns that can be learned and makes it less applicable to more complex classification tasks. Its size also prevents it from being useful for complex machine learning techniques like deep learning, which require larger datasets.
 
 ## Dependencies
-Please look at the environment.yml file for a list of dependencies required to run this project. You can also refer to the `conda-lock.yml` file.
-Sample command: `conda env create --name <my-env-name> --file <path/to/environment.yml>`
+- [Docker](https://www.docker.com/) 
+- [VS Code](https://code.visualstudio.com/download)
+- [VS Code Jupyter Extension](https://marketplace.visualstudio.com/items?itemName=ms-toolsai.jupyter)
 
-## Prerequisites
-Before running the project in Docker, ensure you have:
-- Docker installed
+### Usage
 
-## Using the Docker Container
+#### Setup
+> If you are using Windows or Mac, make sure Docker Desktop is running.
+
+1. Clone this GitHub repository.
+    - `git clone git@github.com:tiffchu/group28.git`
+
+#### Using the Docker Container
 You can reproduce the analysis and run the notebook in a pre configured Docker container.
 
-1. Clone the repository:
-    - `git clone git@github.com:tiffchu/group28.git`
-    - `cd group28`
-
-2. Build the Docker image
+1. Build the Docker image
     - `docker-compose build`
 This creates the `dockerlock` image with all required packages installed.
 
-3. Start the container and JupyterLab
+2. Start the container and JupyterLab
     - `docker-compose up`
 This will start the container, activate the `dockerlock` environment and launch JupyterLab inside the container
 
-4. Open JupyterLab in your browser at
+3. Open JupyterLab in your browser at
     - `http://localhost:8888/lab`
 
-5. Open and run notebooks
+4. Open and run notebooks
     1. In JupyterLab, open the `iris_predictor_report.ipynb`
     2. Run all cells
 
-6. Stop the container
-Return to the terminal where `docker-compose up` is running and press `Ctrl+C`
+5. Stop the container
+Return to the terminal where `docker-compose up` is running and press `Ctrl+C`.
+
+#### Running the analysis
+
+1. Navigate to the root of this project `group28` on your computer using the command line and enter the following command:
+```
+docker compose up
+```
+
+2. In the terminal, copy the URL that starts with `http://127.0.0.1:8888/lab?token=` and paste the URL into your browser.
+
+3. Open another terminal and navigate to the root of this project `group28` on your computer. Enter the following command to reset the project to a clean state and remove all the file generated by previous runs of the analysis.
+```
+make clean
+```
+
+4. Now you can start running the analysis. Navigate to the `src` folder in this project and run the following command to download the Iris data.
+> Note: This will also create a `raw` folder and save the Iris data in that folder.
+```
+python download_data.py --url https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv
+```
+
+5. Next, run following command to split and preprocess the downloaded data.
+> Note: If no inputs were passed, raw data will be pulled from `../data/raw/iris.csv`. The splitted data will be saved into the `proprocessed` subfolder in `data` folder.
+```
+python split_preprocess.py --rawdata ../data/raw/iris.csv
+```
+
+6. Next, run the following command to generate EDA plots and save the plot as PNG file to `figure` subfolder in `Results` folder.
+> Note: If no inputs were passed, train data will be pulled from `../data/processed/` and the plots will be saved to `../results/figures/`
+```
+python eda.py --training-data ../data/processed/iris_train.csv --plot-to ../results/figures/
+```
+
+#### Clean up
+
+1. To shut down the container and clean up the resources, 
+type `Cntrl` + `C` in the terminal where you launched the container, and then type `docker compose rm`
+
+
+## Developer notes
+### Developer dependencies
+- `conda` (version 23.9.0 or higher)
+- `conda-lock` (version 2.5.7 or higher)
+
+### Adding an new dependency
+1. Please look at the `environment.yml` file for a list of dependencies required to run this project. You can also refer to the `conda-lock.yml` file.
+Sample command: `conda env create --name <my-env-name> --file <path/to/environment.yml>`
+2. Run `conda-lock -k explicit --file environment.yml -p linux-64` to update the `conda-linux-64.lock` file.
+3. Re-build the Docker image locally to ensure it builds and runs properly.
+4. Push the changes to GitHub. A new Docker image will be built and pushed to Docker Hub automatically. It will be tagged with the SHA for the commit that changed the file.
+5. Update the `docker-compose.yml` file on your branch to use the new container image (make sure to update the tag specifically).
+6. Send a pull request to merge the changes into the `main` branch.
 
 ## Licenses
 This project is distributed under the licenses listed in `LICENSE`:
