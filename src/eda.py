@@ -5,8 +5,8 @@ import os
 
 
 @click.command()
-@click.option('--training-data', type=str, help="Path to processed training data")
-@click.option('--plot-to', type=str, help="Path to directory where the plot will be written to", default = '../results/figures/')
+@click.option('--training-data', type=str, help="Path to processed training data", flag_value = '../data/processed/iris_train.csv')
+@click.option('--plot-to', type=str, help="Path to directory where the plot will be written to", flag_value = '../results/figures/')
 def main(training_data, plot_to):
     ''' 
     
