@@ -57,7 +57,8 @@ make clean
 ```
 
 4. Now you can start running the analysis. Navigate to the `src` folder in this project and run the following command to download the Iris data.
-> Note: This will also create a `raw` folder and save the Iris data in that folder.
+> Note: This will also create a `raw` folder and save the Iris data in that folder if raw folder if it doesn't exists. 
+> If no inputs were passed, it will automatically download data from `https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv`
 ```
 python download_data.py --url https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv
 ```
