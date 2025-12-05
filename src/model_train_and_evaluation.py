@@ -9,6 +9,30 @@ import click
 import pickle
 import os
 
+def train(X_train, y_train, pipeline, param_grid, n_iter = 50, cv = 5):
+    """Function that perform RandomizedSearchCV, fit model to data set, and return both model and the cross-validation dataframe."""
+    
+    search = RandomizedSearchCV(
+        pipeline, 
+        param_distributions = param_grid, 
+        n_jobs = -1, 
+        n_iter = n_iter, 
+        cv = cv, 
+        return_train_score = True, 
+        random_state = 123
+    )
+
+    search.fit(X_train, y_train)
+
+    result_df = pd.DataFrame(search.cv_results_)[[
+        'mean_fit_time', 'mean_score_time', 
+        *[col for col in search.cv_results_.keys() if col.startswith('param_')],
+        'mean_test_score', 'mean_train_score'
+        ]].sort_values('mean_test_score', ascending = False).head()
+    
+    return search, result_df
+
+
 @click.command()
 @click.option('--training-data', type=str, help="Path to training data", default = "../data/processed/iris_train.csv")
 @click.option('--test-data', type=str, help="Path to test data", default = "../data/processed/iris_test.csv")
@@ -40,17 +64,12 @@ def main(training_data, test_data, models_to, tables_to):
 
     pipe = make_pipeline(StandardScaler(), DecisionTreeClassifier())
 
-    ds_random_search = RandomizedSearchCV(
-                pipe, param_distributions=param_grid, n_jobs=-1, n_iter=50, cv=5, return_train_score=True, random_state=123
-        )
-
-    ds_random_search.fit(X_train, y_train)
+    ds_random_search, ds_result = train(X_train, y_train, pipe, param_grid)
     
-    ds_result = (pd.DataFrame(ds_random_search.cv_results_)[['mean_fit_time', 'mean_score_time', 'param_decisiontreeclassifier__max_depth', 
-                                                            'mean_test_score', 'mean_train_score']].sort_values('mean_test_score', ascending = False).head() )
-    
-    #save knn cross val result to table
+    #save decisiontree cross val result to table
     ds_result.to_csv(os.path.join(tables_to, "ds_results.csv"), index=False)
+
+    #KNN
 
     param_grid = {
         "kneighborsclassifier__n_neighbors": range(1,20)
@@ -58,15 +77,8 @@ def main(training_data, test_data, models_to, tables_to):
 
     pipe = make_pipeline(StandardScaler(), KNeighborsClassifier())
 
-    knn_random_search = RandomizedSearchCV(
-                pipe, param_distributions=param_grid, n_jobs=-1, n_iter=50, cv=5, return_train_score=True, random_state=123
-        )
+    knn_random_search, knn_result = train(X_train, y_train, pipe, param_grid)
 
-    knn_random_search.fit(X_train, y_train)
-    
-    knn_result = (pd.DataFrame(knn_random_search.cv_results_)[['mean_fit_time', 'mean_score_time', 'param_kneighborsclassifier__n_neighbors', 
-                                                            'mean_test_score', 'mean_train_score']].sort_values('mean_test_score', ascending = False).head() )
-    
     #save knn cross val result to table
     knn_result.to_csv(os.path.join(tables_to, "knn_results.csv"), index=False)
 
