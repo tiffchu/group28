@@ -10,10 +10,12 @@ def main(url):
     data = pd.read_csv(url)
     try:
         data.to_csv('../data/raw/iris.csv')
+        print('The Iris data is saved in ../data/raw directory.')
     except Exception as e:
         os.makedirs('../data/raw/')
         data.to_csv('../data/raw/iris.csv')
         print("Error:", e)
+        print('The Iris data is saved in ../data/raw directory.')
         
 
 if __name__ == '__main__':
