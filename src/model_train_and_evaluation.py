@@ -52,6 +52,30 @@ def main(training_data, test_data, models_to, tables_to):
     #save knn cross val result to table
     ds_result.to_csv(os.path.join(tables_to, "knn_results.csv"), index=False)
 
+    #K-NN classifer
+
+    param_grid = {
+        "n_neighbors": range(1,20),
+        }
+
+    param_grid = {
+        "kneighborsclassifier__n_neighbors": range(1,20)
+        }
+
+    pipe = make_pipeline(scaling, KNeighborsClassifier())
+    knn_random_search = RandomizedSearchCV(
+                pipe, param_distributions=param_grid, n_jobs=-1, n_iter=50, cv=5, return_train_score=True, random_state=123
+        )
+
+    knn_random_search.fit(X_train, y_train)
+    
+    knn_result = (pd.DataFrame(knn_random_search.cv_results_)[['mean_fit_time', 'mean_score_time', 'param_kneighborsclassifier__n_neighbors', 
+                                                            'mean_test_score', 'mean_train_score']].sort_values('mean_test_score', ascending = False).head() )
+    
+    #save knn cross val result to table
+    knn_result.to_csv(os.path.join(tables_to, "knn_results.csv"), index=False)
+
+
 if __name__ == '__main__':
     main()
 
