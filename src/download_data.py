@@ -4,7 +4,7 @@ import os
 
 @click.command()
 @click.option('--url', type=str, help="URL of dataset to be downloaded", 
-default= "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv")
+default= "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv", show_default=True)
 
 def main(url):
     """Downloads data csv data from the web to a local filepath and extracts it."""
