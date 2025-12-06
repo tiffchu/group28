@@ -82,16 +82,17 @@ def main(training_data, test_data, models_to, tables_to):
     #save knn cross val result to table
     knn_result.to_csv(os.path.join(tables_to, "knn_results.csv"), index=False)
 
+    #assign best model
     decision_tree = ds_random_search.best_estimator_
     knn = knn_random_search.best_estimator_
 
     #save knn_classifier_model into the results/models file
     with open(os.path.join(models_to, "decision_tree.pickle"), 'wb') as f:
-        pickle.dump(knn_random_search, f)
+        pickle.dump(ds_random_search, f)
 
     #save decision_tree model results/models file
     with open(os.path.join(models_to, "knn.pickle"), 'wb') as f:
-        pickle.dump(ds_random_search, f)
+        pickle.dump(knn_random_search, f)
 
     #Test on test set for both Classifcation mode
 
