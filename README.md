@@ -75,6 +75,12 @@ python split_preprocess.py --rawdata ../data/raw/iris.csv
 python eda.py --training-data ../data/processed/iris_train.csv --plot-to ../results/figures/
 ```
 
+7. Finally, run following command to train and evaluate model on train and test data set.
+> Note: If no inputs were passed, train and test data will be pulled from  `../data/processed/iris_train.csv` and `../data/processed/iris_test.csv`
+```
+python model_train_and_evaluation.py --training-data ../data/processed/iris_train.csv --test-data ../data/processed/iris_test.csv --models-to ../results/models --tables-to ../results/tables
+```
+
 #### Clean up
 
 1. To shut down the container and clean up the resources, 
