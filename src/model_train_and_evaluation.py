@@ -70,7 +70,6 @@ def main(training_data, test_data, models_to, tables_to):
     ds_result.to_csv(os.path.join(tables_to, "ds_results.csv"), index=False)
 
     #KNN
-
     param_grid = {
         "kneighborsclassifier__n_neighbors": range(1,20)
         }
