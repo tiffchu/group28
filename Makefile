@@ -66,7 +66,7 @@ docker-build-local: ## Build single-arch image for local testing (current platfo
 
 .PHONY: clean
 clean: 
-	rm -rf data/raw\
-	rm -rf data/processed\
-	rm -rf results/figures\
+	rm -rf data/raw
+	rm -rf data/processed
+	rm -rf results/figures
 	rm -rf results
