@@ -16,7 +16,7 @@ def main(rawdata):
 
     train_df, test_df = train_test_split(validated_data, test_size=0.3, random_state=123)
 
-    output_dir = "../data/processed/"
+    output_dir = "./data/processed/"
     os.makedirs(output_dir, exist_ok=True)
 
     train_df.to_csv(os.path.join(output_dir, "iris_train.csv"), index=False)
