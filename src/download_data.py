@@ -10,14 +10,14 @@ def main(url):
 
     data = pd.read_csv(url)
 
-    output_path = "../data/raw/iris.csv"
+    output_path = "./data/raw/iris.csv"
 
     #ensure path exists
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-
+    
     try:
         data.to_csv(output_path, index=False)
-        print('The Iris data is saved in ../data/raw directory.')
+        print('The Iris data is saved in ./data/raw directory.')
 
     except Exception as e:
         print("Failed to download or save data:", e)
