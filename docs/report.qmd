@@ -52,8 +52,8 @@ import os
 #     sys.path.append(src_path)
 
 import sys
-sys.path.append("..")        # adds group28/
-sys.path.append("../src")    # adds group28/src
+sys.path.append("..") 
+sys.path.append("../src")  
 
 from src.data_loader import load_data
 
@@ -151,12 +151,20 @@ ds_random_search = RandomizedSearchCV(
             pipe, param_distributions=param_grid, n_jobs=-1, n_iter=50, cv=5, return_train_score=True, random_state=123
     )
 
-ds_random_search.fit(X_train, y_train)
+fit_ds = ds_random_search.fit(X_train, y_train)
 # pd.DataFrame(ds_random_search.cv_results_)[['mean_fit_time', 'mean_score_time', 'param_decisiontreeclassifier__max_depth', 
 #                                                          'mean_test_score', 'mean_train_score']].sort_values('mean_test_score', ascending = False).head()
 ```
 
 ```{python}
+#| label: tbl-decisiontree-score
+#| tbl-cap: "Decision Tree Scores"
+pd.DataFrame(ds_random_search.cv_results_)[['mean_fit_time', 'mean_score_time', 'param_decisiontreeclassifier__max_depth', 
+                                                         'mean_test_score', 'mean_train_score']].sort_values('mean_test_score', ascending = False).head()
+```
+
+```{python}
+
 #K-NN classifer
 
 param_grid = {
@@ -172,9 +180,17 @@ knn_random_search = RandomizedSearchCV(
             pipe, param_distributions=param_grid, n_jobs=-1, n_iter=50, cv=5, return_train_score=True, random_state=123
     )
 
-knn_random_search.fit(X_train, y_train)
+fit_knn = knn_random_search.fit(X_train, y_train)
 # pd.DataFrame(knn_random_search.cv_results_)[['mean_fit_time', 'mean_score_time', 'param_kneighborsclassifier__n_neighbors', 
 #                                                          'mean_test_score', 'mean_train_score']].sort_values('mean_test_score', ascending = False).head()
+```
+
+```{python}
+#| label: tbl-knn-score
+#| tbl-cap: "K-NN classifer Scores"
+
+pd.DataFrame(knn_random_search.cv_results_)[['mean_fit_time', 'mean_score_time', 'param_kneighborsclassifier__n_neighbors', 
+                                                         'mean_test_score', 'mean_train_score']].sort_values('mean_test_score', ascending = False).head()
 ```
 
 ```{python}
@@ -199,6 +215,7 @@ cm_ds
 ```{python}
 #| label: tbl-knn
 #| tbl-cap: "K-NN confusion matrix"
+
 #print("KNN model accuracy on test set: ", knn.score(X_test, y_test))
 cm_knn = pd.DataFrame(
     confusion_matrix(y_test, knn.predict(X_test)),

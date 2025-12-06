@@ -2627,1267 +2627,158 @@ Figure 2: Boxplot of Iris Feature Variation
 <section id="model-training" class="level2">
 <h2 class="anchored" data-anchor-id="model-training">Model Training</h2>
 <p>Performs classification or regression analysis and then plot.</p>
-<div id="7b2e8f87" class="cell" data-execution_count="6">
-<div class="cell-output cell-output-display" data-execution_count="6">
-<style>#sk-container-id-1 {
-
---sklearn-color-text: #000;
---sklearn-color-text-muted: #666;
---sklearn-color-line: gray;
-
---sklearn-color-unfitted-level-0: #fff5e6;
---sklearn-color-unfitted-level-1: #f6e4d2;
---sklearn-color-unfitted-level-2: #ffe0b3;
---sklearn-color-unfitted-level-3: chocolate;
-
---sklearn-color-fitted-level-0: #f0f8ff;
---sklearn-color-fitted-level-1: #d4ebff;
---sklearn-color-fitted-level-2: #b3dbfd;
---sklearn-color-fitted-level-3: cornflowerblue;
-
---sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
---sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
---sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
---sklearn-color-icon: #696969;
-@media (prefers-color-scheme: dark) {
-
---sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
---sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
---sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
---sklearn-color-icon: #878787;
-}
-}
-#sk-container-id-1 {
-color: var(--sklearn-color-text);
-}
-#sk-container-id-1 pre {
-padding: 0;
-}
-#sk-container-id-1 input.sk-hidden--visually {
-border: 0;
-clip: rect(1px 1px 1px 1px);
-clip: rect(1px, 1px, 1px, 1px);
-height: 1px;
-margin: -1px;
-overflow: hidden;
-padding: 0;
-position: absolute;
-width: 1px;
-}
-#sk-container-id-1 div.sk-dashed-wrapped {
-border: 1px dashed var(--sklearn-color-line);
-margin: 0 0.4em 0.5em 0.4em;
-box-sizing: border-box;
-padding-bottom: 0.4em;
-background-color: var(--sklearn-color-background);
-}
-#sk-container-id-1 div.sk-container {
-
-display: inline-block !important;
-position: relative;
-}
-#sk-container-id-1 div.sk-text-repr-fallback {
-display: none;
-}
-div.sk-parallel-item,
-div.sk-serial,
-div.sk-item {
-
-background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
-background-size: 2px 100%;
-background-repeat: no-repeat;
-background-position: center center;
-}
-
-#sk-container-id-1 div.sk-parallel-item::after {
-content: "";
-width: 100%;
-border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
-flex-grow: 1;
-}
-#sk-container-id-1 div.sk-parallel {
-display: flex;
-align-items: stretch;
-justify-content: center;
-background-color: var(--sklearn-color-background);
-position: relative;
-}
-#sk-container-id-1 div.sk-parallel-item {
-display: flex;
-flex-direction: column;
-}
-#sk-container-id-1 div.sk-parallel-item:first-child::after {
-align-self: flex-end;
-width: 50%;
-}
-#sk-container-id-1 div.sk-parallel-item:last-child::after {
-align-self: flex-start;
-width: 50%;
-}
-#sk-container-id-1 div.sk-parallel-item:only-child::after {
-width: 0;
-}
-
-#sk-container-id-1 div.sk-serial {
-display: flex;
-flex-direction: column;
-align-items: center;
-background-color: var(--sklearn-color-background);
-padding-right: 1em;
-padding-left: 1em;
-}
-
-
-#sk-container-id-1 div.sk-toggleable {
-
-background-color: var(--sklearn-color-background);
-}
-
-#sk-container-id-1 label.sk-toggleable__label {
-cursor: pointer;
-display: flex;
-width: 100%;
-margin-bottom: 0;
-padding: 0.5em;
-box-sizing: border-box;
-text-align: center;
-align-items: start;
-justify-content: space-between;
-gap: 0.5em;
-}
-#sk-container-id-1 label.sk-toggleable__label .caption {
-font-size: 0.6rem;
-font-weight: lighter;
-color: var(--sklearn-color-text-muted);
-}
-#sk-container-id-1 label.sk-toggleable__label-arrow:before {
-
-content: "▸";
-float: left;
-margin-right: 0.25em;
-color: var(--sklearn-color-icon);
-}
-#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
-color: var(--sklearn-color-text);
-}
-
-#sk-container-id-1 div.sk-toggleable__content {
-display: none;
-text-align: left;
-
-background-color: var(--sklearn-color-unfitted-level-0);
-}
-#sk-container-id-1 div.sk-toggleable__content.fitted {
-
-background-color: var(--sklearn-color-fitted-level-0);
-}
-#sk-container-id-1 div.sk-toggleable__content pre {
-margin: 0.2em;
-border-radius: 0.25em;
-color: var(--sklearn-color-text);
-
-background-color: var(--sklearn-color-unfitted-level-0);
-}
-#sk-container-id-1 div.sk-toggleable__content.fitted pre {
-
-background-color: var(--sklearn-color-fitted-level-0);
-}
-#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
-
-display: block;
-width: 100%;
-overflow: visible;
-}
-#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
-content: "▾";
-}
-
-#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
-color: var(--sklearn-color-text);
-background-color: var(--sklearn-color-unfitted-level-2);
-}
-#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-background-color: var(--sklearn-color-fitted-level-2);
-}
-
-
-#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
-
-background-color: var(--sklearn-color-unfitted-level-2);
-}
-#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-
-background-color: var(--sklearn-color-fitted-level-2);
-}
-#sk-container-id-1 div.sk-label label.sk-toggleable__label,
-#sk-container-id-1 div.sk-label label {
-
-color: var(--sklearn-color-text-on-default-background);
-}
-
-#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
-color: var(--sklearn-color-text);
-background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
-color: var(--sklearn-color-text);
-background-color: var(--sklearn-color-fitted-level-2);
-}
-
-#sk-container-id-1 div.sk-label label {
-font-family: monospace;
-font-weight: bold;
-display: inline-block;
-line-height: 1.2em;
-}
-#sk-container-id-1 div.sk-label-container {
-text-align: center;
-}
-
-#sk-container-id-1 div.sk-estimator {
-font-family: monospace;
-border: 1px dotted var(--sklearn-color-border-box);
-border-radius: 0.25em;
-box-sizing: border-box;
-margin-bottom: 0.5em;
-
-background-color: var(--sklearn-color-unfitted-level-0);
-}
-#sk-container-id-1 div.sk-estimator.fitted {
-
-background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-1 div.sk-estimator:hover {
-
-background-color: var(--sklearn-color-unfitted-level-2);
-}
-#sk-container-id-1 div.sk-estimator.fitted:hover {
-
-background-color: var(--sklearn-color-fitted-level-2);
-}
-
-
-.sk-estimator-doc-link,
-a:link.sk-estimator-doc-link,
-a:visited.sk-estimator-doc-link {
-float: right;
-font-size: smaller;
-line-height: 1em;
-font-family: monospace;
-background-color: var(--sklearn-color-background);
-border-radius: 1em;
-height: 1em;
-width: 1em;
-text-decoration: none !important;
-margin-left: 0.5em;
-text-align: center;
-
-border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-color: var(--sklearn-color-unfitted-level-1);
-}
-.sk-estimator-doc-link.fitted,
-a:link.sk-estimator-doc-link.fitted,
-a:visited.sk-estimator-doc-link.fitted {
-
-border: var(--sklearn-color-fitted-level-1) 1pt solid;
-color: var(--sklearn-color-fitted-level-1);
-}
-
-div.sk-estimator:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover,
-div.sk-label-container:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover {
-
-background-color: var(--sklearn-color-unfitted-level-3);
-color: var(--sklearn-color-background);
-text-decoration: none;
-}
-div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover,
-div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover {
-
-background-color: var(--sklearn-color-fitted-level-3);
-color: var(--sklearn-color-background);
-text-decoration: none;
-}
-
-.sk-estimator-doc-link span {
-display: none;
-z-index: 9999;
-position: relative;
-font-weight: normal;
-right: .2ex;
-padding: .5ex;
-margin: .5ex;
-width: min-content;
-min-width: 20ex;
-max-width: 50ex;
-color: var(--sklearn-color-text);
-box-shadow: 2pt 2pt 4pt #999;
-
-background: var(--sklearn-color-unfitted-level-0);
-border: .5pt solid var(--sklearn-color-unfitted-level-3);
-}
-.sk-estimator-doc-link.fitted span {
-
-background: var(--sklearn-color-fitted-level-0);
-border: var(--sklearn-color-fitted-level-3);
-}
-.sk-estimator-doc-link:hover span {
-display: block;
-}
-/* "?"-specific style due to the `<a>` HTML tag */
-
-#sk-container-id-1 a.estimator_doc_link {
-  float: right;
-  font-size: 1rem;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1rem;
-  height: 1rem;
-  width: 1rem;
-  text-decoration: none;
-  /* unfitted */
-  color: var(--sklearn-color-unfitted-level-1);
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-}
-
-#sk-container-id-1 a.estimator_doc_link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-#sk-container-id-1 a.estimator_doc_link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-#sk-container-id-1 a.estimator_doc_link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-}
-
-.estimator-table summary {
-    padding: .5rem;
-    font-family: monospace;
-    cursor: pointer;
-}
-
-.estimator-table details[open] {
-    padding-left: 0.1rem;
-    padding-right: 0.1rem;
-    padding-bottom: 0.3rem;
-}
-
-.estimator-table .parameters-table {
-    margin-left: auto !important;
-    margin-right: auto !important;
-}
-
-.estimator-table .parameters-table tr:nth-child(odd) {
-    background-color: #fff;
-}
-
-.estimator-table .parameters-table tr:nth-child(even) {
-    background-color: #f6f6f6;
-}
-
-.estimator-table .parameters-table tr:hover {
-    background-color: #e0e0e0;
-}
-
-.estimator-table table td {
-    border: 1px solid rgba(106, 105, 104, 0.232);
-}
-
-.user-set td {
-    color:rgb(255, 94, 0);
-    text-align: left;
-}
-
-.user-set td.value pre {
-    color:rgb(255, 94, 0) !important;
-    background-color: transparent !important;
-}
-
-.default td {
-    color: black;
-    text-align: left;
-}
-
-.user-set td i,
-.default td i {
-    color: black;
-}
-
-.copy-paste-icon {
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNy4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjUgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTIwOCAwTDMzMi4xIDBjMTIuNyAwIDI0LjkgNS4xIDMzLjkgMTQuMWw2Ny45IDY3LjljOSA5IDE0LjEgMjEuMiAxNC4xIDMzLjlMNDQ4IDMzNmMwIDI2LjUtMjEuNSA0OC00OCA0OGwtMTkyIDBjLTI2LjUgMC00OC0yMS41LTQ4LTQ4bDAtMjg4YzAtMjYuNSAyMS41LTQ4IDQ4LTQ4ek00OCAxMjhsODAgMCAwIDY0LTY0IDAgMCAyNTYgMTkyIDAgMC0zMiA2NCAwIDAgNDhjMCAyNi41LTIxLjUgNDgtNDggNDhMNDggNTEyYy0yNi41IDAtNDgtMjEuNS00OC00OEwwIDE3NmMwLTI2LjUgMjEuNS00OCA0OC00OHoiLz48L3N2Zz4=);
-    background-repeat: no-repeat;
-    background-size: 14px 14px;
-    background-position: 0;
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    cursor: pointer;
-}
-</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomizedSearchCV(cv=5,
-                   estimator=Pipeline(steps=[(&#39;standardscaler&#39;,
-                                              StandardScaler()),
-                                             (&#39;decisiontreeclassifier&#39;,
-                                              DecisionTreeClassifier())]),
-                   n_iter=50, n_jobs=-1,
-                   param_distributions={&#39;decisiontreeclassifier__max_depth&#39;: range(1, 20)},
-                   random_state=123, return_train_score=True)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox"><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>RandomizedSearchCV</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.RandomizedSearchCV.html">?<span>Documentation for RandomizedSearchCV</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix>
-        <div class="estimator-table">
-            <details>
-                <summary>Parameters</summary>
-                
-<table class="parameters-table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
-<tbody>
-<tr class="user-set odd">
-<td><em></em></td>
-<td class="param">estimator </td>
-<td class="value">Pipeline(step...lassifier())])</td>
-</tr>
-<tr class="user-set even">
-<td><em></em></td>
-<td class="param">param_distributions </td>
-<td class="value">{&#39;decisiontreeclassifier__max_depth&#39;: range(1, 20)}</td>
-</tr>
-<tr class="user-set odd">
-<td><em></em></td>
-<td class="param">n_iter </td>
-<td class="value">50</td>
-</tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param">scoring </td>
-<td class="value">None</td>
-</tr>
-<tr class="user-set odd">
-<td><em></em></td>
-<td class="param">n_jobs </td>
-<td class="value">-1</td>
-</tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param">refit </td>
-<td class="value">True</td>
-</tr>
-<tr class="user-set odd">
-<td><em></em></td>
-<td class="param">cv </td>
-<td class="value">5</td>
-</tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param">verbose </td>
-<td class="value">0</td>
-</tr>
-<tr class="default odd">
-<td><em></em></td>
-<td class="param">pre_dispatch </td>
-<td class="value">&#39;2*n_jobs&#39;</td>
-</tr>
-<tr class="user-set even">
-<td><em></em></td>
-<td class="param">random_state </td>
-<td class="value">123</td>
-</tr>
-<tr class="default odd">
-<td><em></em></td>
-<td class="param">error_score </td>
-<td class="value">nan</td>
-</tr>
-<tr class="user-set even">
-<td><em></em></td>
-<td class="param">return_train_score </td>
-<td class="value">True</td>
-</tr>
-</tbody>
-</table>
-
-            </details>
-        </div>
-    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox"><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>best_estimator_: Pipeline</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___"></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox"><label for="sk-estimator-id-3" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>StandardScaler</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.StandardScaler.html">?<span>Documentation for StandardScaler</span></a></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___standardscaler__">
-        <div class="estimator-table">
-            <details>
-                <summary>Parameters</summary>
-                
-<table class="parameters-table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
-<tbody>
-<tr class="default odd">
-<td><em></em></td>
-<td class="param">copy </td>
-<td class="value">True</td>
-</tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param">with_mean </td>
-<td class="value">True</td>
-</tr>
-<tr class="default odd">
-<td><em></em></td>
-<td class="param">with_std </td>
-<td class="value">True</td>
-</tr>
-</tbody>
-</table>
-
-            </details>
-        </div>
-    </div></div></div><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox"><label for="sk-estimator-id-4" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>DecisionTreeClassifier</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.tree.DecisionTreeClassifier.html">?<span>Documentation for DecisionTreeClassifier</span></a></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___decisiontreeclassifier__">
-        <div class="estimator-table">
-            <details>
-                <summary>Parameters</summary>
-                
-<table class="parameters-table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
-<tbody>
-<tr class="default odd">
-<td><em></em></td>
-<td class="param">criterion </td>
-<td class="value">&#39;gini&#39;</td>
-</tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param">splitter </td>
-<td class="value">&#39;best&#39;</td>
-</tr>
-<tr class="user-set odd">
-<td><em></em></td>
-<td class="param">max_depth </td>
-<td class="value">4</td>
-</tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param">min_samples_split </td>
-<td class="value">2</td>
-</tr>
-<tr class="default odd">
-<td><em></em></td>
-<td class="param">min_samples_leaf </td>
-<td class="value">1</td>
-</tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param">min_weight_fraction_leaf </td>
-<td class="value">0.0</td>
-</tr>
-<tr class="default odd">
-<td><em></em></td>
-<td class="param">max_features </td>
-<td class="value">None</td>
-</tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param">random_state </td>
-<td class="value">None</td>
-</tr>
-<tr class="default odd">
-<td><em></em></td>
-<td class="param">max_leaf_nodes </td>
-<td class="value">None</td>
-</tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param">min_impurity_decrease </td>
-<td class="value">0.0</td>
-</tr>
-<tr class="default odd">
-<td><em></em></td>
-<td class="param">class_weight </td>
-<td class="value">None</td>
-</tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param">ccp_alpha </td>
-<td class="value">0.0</td>
-</tr>
-<tr class="default odd">
-<td><em></em></td>
-<td class="param">monotonic_cst </td>
-<td class="value">None</td>
-</tr>
-</tbody>
-</table>
-
-            </details>
-        </div>
-    </div></div></div></div></div></div></div></div></div></div></div></div><script>function copyToClipboard(text, element) {
-    // Get the parameter prefix from the closest toggleable content
-    const toggleableContent = element.closest('.sk-toggleable__content');
-    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
-    const fullParamName = paramPrefix ? `${paramPrefix}${text}` : text;
-
-    const originalStyle = element.style;
-    const computedStyle = window.getComputedStyle(element);
-    const originalWidth = computedStyle.width;
-    const originalHTML = element.innerHTML.replace('Copied!', '');
-
-    navigator.clipboard.writeText(fullParamName)
-        .then(() => {
-            element.style.width = originalWidth;
-            element.style.color = 'green';
-            element.innerHTML = "Copied!";
-
-            setTimeout(() => {
-                element.innerHTML = originalHTML;
-                element.style = originalStyle;
-            }, 2000);
-        })
-        .catch(err => {
-            console.error('Failed to copy:', err);
-            element.style.color = 'red';
-            element.innerHTML = "Failed!";
-            setTimeout(() => {
-                element.innerHTML = originalHTML;
-                element.style = originalStyle;
-            }, 2000);
-        });
-    return false;
-}
-
-document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
-    const toggleableContent = element.closest('.sk-toggleable__content');
-    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
-    const paramName = element.parentElement.nextElementSibling.textContent.trim();
-    const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
-
-    element.setAttribute('title', fullParamName);
-});
-</script>
-</div>
-</div>
-<div id="68472c50" class="cell" data-execution_count="7">
+<div class="cell" data-execution_count="7">
+<div id="tbl-decisiontree-score" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="7">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-decisiontree-score-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table 5: Decision Tree Scores
+</figcaption>
+<div aria-describedby="tbl-decisiontree-score-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-display" data-execution_count="7">
-<style>#sk-container-id-2 {
-
---sklearn-color-text: #000;
---sklearn-color-text-muted: #666;
---sklearn-color-line: gray;
-
---sklearn-color-unfitted-level-0: #fff5e6;
---sklearn-color-unfitted-level-1: #f6e4d2;
---sklearn-color-unfitted-level-2: #ffe0b3;
---sklearn-color-unfitted-level-3: chocolate;
-
---sklearn-color-fitted-level-0: #f0f8ff;
---sklearn-color-fitted-level-1: #d4ebff;
---sklearn-color-fitted-level-2: #b3dbfd;
---sklearn-color-fitted-level-3: cornflowerblue;
-
---sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
---sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
---sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
---sklearn-color-icon: #696969;
-@media (prefers-color-scheme: dark) {
-
---sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
---sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
---sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
---sklearn-color-icon: #878787;
-}
-}
-#sk-container-id-2 {
-color: var(--sklearn-color-text);
-}
-#sk-container-id-2 pre {
-padding: 0;
-}
-#sk-container-id-2 input.sk-hidden--visually {
-border: 0;
-clip: rect(1px 1px 1px 1px);
-clip: rect(1px, 1px, 1px, 1px);
-height: 1px;
-margin: -1px;
-overflow: hidden;
-padding: 0;
-position: absolute;
-width: 1px;
-}
-#sk-container-id-2 div.sk-dashed-wrapped {
-border: 1px dashed var(--sklearn-color-line);
-margin: 0 0.4em 0.5em 0.4em;
-box-sizing: border-box;
-padding-bottom: 0.4em;
-background-color: var(--sklearn-color-background);
-}
-#sk-container-id-2 div.sk-container {
-
-display: inline-block !important;
-position: relative;
-}
-#sk-container-id-2 div.sk-text-repr-fallback {
-display: none;
-}
-div.sk-parallel-item,
-div.sk-serial,
-div.sk-item {
-
-background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
-background-size: 2px 100%;
-background-repeat: no-repeat;
-background-position: center center;
-}
-
-#sk-container-id-2 div.sk-parallel-item::after {
-content: "";
-width: 100%;
-border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
-flex-grow: 1;
-}
-#sk-container-id-2 div.sk-parallel {
-display: flex;
-align-items: stretch;
-justify-content: center;
-background-color: var(--sklearn-color-background);
-position: relative;
-}
-#sk-container-id-2 div.sk-parallel-item {
-display: flex;
-flex-direction: column;
-}
-#sk-container-id-2 div.sk-parallel-item:first-child::after {
-align-self: flex-end;
-width: 50%;
-}
-#sk-container-id-2 div.sk-parallel-item:last-child::after {
-align-self: flex-start;
-width: 50%;
-}
-#sk-container-id-2 div.sk-parallel-item:only-child::after {
-width: 0;
-}
-
-#sk-container-id-2 div.sk-serial {
-display: flex;
-flex-direction: column;
-align-items: center;
-background-color: var(--sklearn-color-background);
-padding-right: 1em;
-padding-left: 1em;
-}
+<div>
 
 
-#sk-container-id-2 div.sk-toggleable {
-
-background-color: var(--sklearn-color-background);
-}
-
-#sk-container-id-2 label.sk-toggleable__label {
-cursor: pointer;
-display: flex;
-width: 100%;
-margin-bottom: 0;
-padding: 0.5em;
-box-sizing: border-box;
-text-align: center;
-align-items: start;
-justify-content: space-between;
-gap: 0.5em;
-}
-#sk-container-id-2 label.sk-toggleable__label .caption {
-font-size: 0.6rem;
-font-weight: lighter;
-color: var(--sklearn-color-text-muted);
-}
-#sk-container-id-2 label.sk-toggleable__label-arrow:before {
-
-content: "▸";
-float: left;
-margin-right: 0.25em;
-color: var(--sklearn-color-icon);
-}
-#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {
-color: var(--sklearn-color-text);
-}
-
-#sk-container-id-2 div.sk-toggleable__content {
-display: none;
-text-align: left;
-
-background-color: var(--sklearn-color-unfitted-level-0);
-}
-#sk-container-id-2 div.sk-toggleable__content.fitted {
-
-background-color: var(--sklearn-color-fitted-level-0);
-}
-#sk-container-id-2 div.sk-toggleable__content pre {
-margin: 0.2em;
-border-radius: 0.25em;
-color: var(--sklearn-color-text);
-
-background-color: var(--sklearn-color-unfitted-level-0);
-}
-#sk-container-id-2 div.sk-toggleable__content.fitted pre {
-
-background-color: var(--sklearn-color-fitted-level-0);
-}
-#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {
-
-display: block;
-width: 100%;
-overflow: visible;
-}
-#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
-content: "▾";
-}
-
-#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
-color: var(--sklearn-color-text);
-background-color: var(--sklearn-color-unfitted-level-2);
-}
-#sk-container-id-2 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-background-color: var(--sklearn-color-fitted-level-2);
-}
-
-
-#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
-
-background-color: var(--sklearn-color-unfitted-level-2);
-}
-#sk-container-id-2 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
-
-background-color: var(--sklearn-color-fitted-level-2);
-}
-#sk-container-id-2 div.sk-label label.sk-toggleable__label,
-#sk-container-id-2 div.sk-label label {
-
-color: var(--sklearn-color-text-on-default-background);
-}
-
-#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {
-color: var(--sklearn-color-text);
-background-color: var(--sklearn-color-unfitted-level-2);
-}
-
-#sk-container-id-2 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
-color: var(--sklearn-color-text);
-background-color: var(--sklearn-color-fitted-level-2);
-}
-
-#sk-container-id-2 div.sk-label label {
-font-family: monospace;
-font-weight: bold;
-display: inline-block;
-line-height: 1.2em;
-}
-#sk-container-id-2 div.sk-label-container {
-text-align: center;
-}
-
-#sk-container-id-2 div.sk-estimator {
-font-family: monospace;
-border: 1px dotted var(--sklearn-color-border-box);
-border-radius: 0.25em;
-box-sizing: border-box;
-margin-bottom: 0.5em;
-
-background-color: var(--sklearn-color-unfitted-level-0);
-}
-#sk-container-id-2 div.sk-estimator.fitted {
-
-background-color: var(--sklearn-color-fitted-level-0);
-}
-
-#sk-container-id-2 div.sk-estimator:hover {
-
-background-color: var(--sklearn-color-unfitted-level-2);
-}
-#sk-container-id-2 div.sk-estimator.fitted:hover {
-
-background-color: var(--sklearn-color-fitted-level-2);
-}
-
-
-.sk-estimator-doc-link,
-a:link.sk-estimator-doc-link,
-a:visited.sk-estimator-doc-link {
-float: right;
-font-size: smaller;
-line-height: 1em;
-font-family: monospace;
-background-color: var(--sklearn-color-background);
-border-radius: 1em;
-height: 1em;
-width: 1em;
-text-decoration: none !important;
-margin-left: 0.5em;
-text-align: center;
-
-border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-color: var(--sklearn-color-unfitted-level-1);
-}
-.sk-estimator-doc-link.fitted,
-a:link.sk-estimator-doc-link.fitted,
-a:visited.sk-estimator-doc-link.fitted {
-
-border: var(--sklearn-color-fitted-level-1) 1pt solid;
-color: var(--sklearn-color-fitted-level-1);
-}
-
-div.sk-estimator:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover,
-div.sk-label-container:hover .sk-estimator-doc-link:hover,
-.sk-estimator-doc-link:hover {
-
-background-color: var(--sklearn-color-unfitted-level-3);
-color: var(--sklearn-color-background);
-text-decoration: none;
-}
-div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover,
-div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
-.sk-estimator-doc-link.fitted:hover {
-
-background-color: var(--sklearn-color-fitted-level-3);
-color: var(--sklearn-color-background);
-text-decoration: none;
-}
-
-.sk-estimator-doc-link span {
-display: none;
-z-index: 9999;
-position: relative;
-font-weight: normal;
-right: .2ex;
-padding: .5ex;
-margin: .5ex;
-width: min-content;
-min-width: 20ex;
-max-width: 50ex;
-color: var(--sklearn-color-text);
-box-shadow: 2pt 2pt 4pt #999;
-
-background: var(--sklearn-color-unfitted-level-0);
-border: .5pt solid var(--sklearn-color-unfitted-level-3);
-}
-.sk-estimator-doc-link.fitted span {
-
-background: var(--sklearn-color-fitted-level-0);
-border: var(--sklearn-color-fitted-level-3);
-}
-.sk-estimator-doc-link:hover span {
-display: block;
-}
-/* "?"-specific style due to the `<a>` HTML tag */
-
-#sk-container-id-2 a.estimator_doc_link {
-  float: right;
-  font-size: 1rem;
-  line-height: 1em;
-  font-family: monospace;
-  background-color: var(--sklearn-color-background);
-  border-radius: 1rem;
-  height: 1rem;
-  width: 1rem;
-  text-decoration: none;
-  /* unfitted */
-  color: var(--sklearn-color-unfitted-level-1);
-  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
-}
-
-#sk-container-id-2 a.estimator_doc_link.fitted {
-  /* fitted */
-  border: var(--sklearn-color-fitted-level-1) 1pt solid;
-  color: var(--sklearn-color-fitted-level-1);
-}
-
-/* On hover */
-#sk-container-id-2 a.estimator_doc_link:hover {
-  /* unfitted */
-  background-color: var(--sklearn-color-unfitted-level-3);
-  color: var(--sklearn-color-background);
-  text-decoration: none;
-}
-
-#sk-container-id-2 a.estimator_doc_link.fitted:hover {
-  /* fitted */
-  background-color: var(--sklearn-color-fitted-level-3);
-}
-
-.estimator-table summary {
-    padding: .5rem;
-    font-family: monospace;
-    cursor: pointer;
-}
-
-.estimator-table details[open] {
-    padding-left: 0.1rem;
-    padding-right: 0.1rem;
-    padding-bottom: 0.3rem;
-}
-
-.estimator-table .parameters-table {
-    margin-left: auto !important;
-    margin-right: auto !important;
-}
-
-.estimator-table .parameters-table tr:nth-child(odd) {
-    background-color: #fff;
-}
-
-.estimator-table .parameters-table tr:nth-child(even) {
-    background-color: #f6f6f6;
-}
-
-.estimator-table .parameters-table tr:hover {
-    background-color: #e0e0e0;
-}
-
-.estimator-table table td {
-    border: 1px solid rgba(106, 105, 104, 0.232);
-}
-
-.user-set td {
-    color:rgb(255, 94, 0);
-    text-align: left;
-}
-
-.user-set td.value pre {
-    color:rgb(255, 94, 0) !important;
-    background-color: transparent !important;
-}
-
-.default td {
-    color: black;
-    text-align: left;
-}
-
-.user-set td i,
-.default td i {
-    color: black;
-}
-
-.copy-paste-icon {
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNy4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjUgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTIwOCAwTDMzMi4xIDBjMTIuNyAwIDI0LjkgNS4xIDMzLjkgMTQuMWw2Ny45IDY3LjljOSA5IDE0LjEgMjEuMiAxNC4xIDMzLjlMNDQ4IDMzNmMwIDI2LjUtMjEuNSA0OC00OCA0OGwtMTkyIDBjLTI2LjUgMC00OC0yMS41LTQ4LTQ4bDAtMjg4YzAtMjYuNSAyMS41LTQ4IDQ4LTQ4ek00OCAxMjhsODAgMCAwIDY0LTY0IDAgMCAyNTYgMTkyIDAgMC0zMiA2NCAwIDAgNDhjMCAyNi41LTIxLjUgNDgtNDggNDhMNDggNTEyYy0yNi41IDAtNDgtMjEuNS00OC00OEwwIDE3NmMwLTI2LjUgMjEuNS00OCA0OC00OHoiLz48L3N2Zz4=);
-    background-repeat: no-repeat;
-    background-size: 14px 14px;
-    background-position: 0;
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    cursor: pointer;
-}
-</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomizedSearchCV(cv=5,
-                   estimator=Pipeline(steps=[(&#39;standardscaler&#39;,
-                                              StandardScaler()),
-                                             (&#39;kneighborsclassifier&#39;,
-                                              KNeighborsClassifier())]),
-                   n_iter=50, n_jobs=-1,
-                   param_distributions={&#39;kneighborsclassifier__n_neighbors&#39;: range(1, 20)},
-                   random_state=123, return_train_score=True)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox"><label for="sk-estimator-id-5" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>RandomizedSearchCV</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.RandomizedSearchCV.html">?<span>Documentation for RandomizedSearchCV</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix>
-        <div class="estimator-table">
-            <details>
-                <summary>Parameters</summary>
-                
-<table class="parameters-table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean_fit_time</th>
+<th data-quarto-table-cell-role="th">mean_score_time</th>
+<th data-quarto-table-cell-role="th">param_decisiontreeclassifier__max_depth</th>
+<th data-quarto-table-cell-role="th">mean_test_score</th>
+<th data-quarto-table-cell-role="th">mean_train_score</th>
+</tr>
+</thead>
 <tbody>
-<tr class="user-set odd">
-<td><em></em></td>
-<td class="param">estimator </td>
-<td class="value">Pipeline(step...lassifier())])</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">9</td>
+<td>0.004801</td>
+<td>0.003208</td>
+<td>10</td>
+<td>0.942857</td>
+<td>1.0</td>
 </tr>
-<tr class="user-set even">
-<td><em></em></td>
-<td class="param">param_distributions </td>
-<td class="value">{&#39;kneighborsclassifier__n_neighbors&#39;: range(1, 20)}</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">10</td>
+<td>0.005417</td>
+<td>0.002647</td>
+<td>11</td>
+<td>0.942857</td>
+<td>1.0</td>
 </tr>
-<tr class="user-set odd">
-<td><em></em></td>
-<td class="param">n_iter </td>
-<td class="value">50</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>0.007130</td>
+<td>0.003354</td>
+<td>7</td>
+<td>0.942857</td>
+<td>1.0</td>
 </tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param">scoring </td>
-<td class="value">None</td>
+<tr class="even">
+<td data-quarto-table-cell-role="th">14</td>
+<td>0.004952</td>
+<td>0.002251</td>
+<td>15</td>
+<td>0.942857</td>
+<td>1.0</td>
 </tr>
-<tr class="user-set odd">
-<td><em></em></td>
-<td class="param">n_jobs </td>
-<td class="value">-1</td>
-</tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param">refit </td>
-<td class="value">True</td>
-</tr>
-<tr class="user-set odd">
-<td><em></em></td>
-<td class="param">cv </td>
-<td class="value">5</td>
-</tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param">verbose </td>
-<td class="value">0</td>
-</tr>
-<tr class="default odd">
-<td><em></em></td>
-<td class="param">pre_dispatch </td>
-<td class="value">&#39;2*n_jobs&#39;</td>
-</tr>
-<tr class="user-set even">
-<td><em></em></td>
-<td class="param">random_state </td>
-<td class="value">123</td>
-</tr>
-<tr class="default odd">
-<td><em></em></td>
-<td class="param">error_score </td>
-<td class="value">nan</td>
-</tr>
-<tr class="user-set even">
-<td><em></em></td>
-<td class="param">return_train_score </td>
-<td class="value">True</td>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">7</td>
+<td>0.006207</td>
+<td>0.002690</td>
+<td>8</td>
+<td>0.933333</td>
+<td>1.0</td>
 </tr>
 </tbody>
 </table>
 
-            </details>
-        </div>
-    </div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox"><label for="sk-estimator-id-6" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>best_estimator_: Pipeline</div></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___"></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-serial"><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-7" type="checkbox"><label for="sk-estimator-id-7" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>StandardScaler</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.preprocessing.StandardScaler.html">?<span>Documentation for StandardScaler</span></a></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___standardscaler__">
-        <div class="estimator-table">
-            <details>
-                <summary>Parameters</summary>
-                
-<table class="parameters-table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
-<tbody>
-<tr class="default odd">
-<td><em></em></td>
-<td class="param">copy </td>
-<td class="value">True</td>
-</tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param">with_mean </td>
-<td class="value">True</td>
-</tr>
-<tr class="default odd">
-<td><em></em></td>
-<td class="param">with_std </td>
-<td class="value">True</td>
-</tr>
-</tbody>
-</table>
-
-            </details>
-        </div>
-    </div></div></div><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-8" type="checkbox"><label for="sk-estimator-id-8" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>KNeighborsClassifier</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.neighbors.KNeighborsClassifier.html">?<span>Documentation for KNeighborsClassifier</span></a></div></label><div class="sk-toggleable__content fitted" data-param-prefix="best_estimator___kneighborsclassifier__">
-        <div class="estimator-table">
-            <details>
-                <summary>Parameters</summary>
-                
-<table class="parameters-table caption-top table table-sm table-striped small" data-quarto-postprocess="true">
-<tbody>
-<tr class="default odd">
-<td><em></em></td>
-<td class="param">n_neighbors </td>
-<td class="value">5</td>
-</tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param">weights </td>
-<td class="value">&#39;uniform&#39;</td>
-</tr>
-<tr class="default odd">
-<td><em></em></td>
-<td class="param">algorithm </td>
-<td class="value">&#39;auto&#39;</td>
-</tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param">leaf_size </td>
-<td class="value">30</td>
-</tr>
-<tr class="default odd">
-<td><em></em></td>
-<td class="param">p </td>
-<td class="value">2</td>
-</tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param">metric </td>
-<td class="value">&#39;minkowski&#39;</td>
-</tr>
-<tr class="default odd">
-<td><em></em></td>
-<td class="param">metric_params </td>
-<td class="value">None</td>
-</tr>
-<tr class="default even">
-<td><em></em></td>
-<td class="param">n_jobs </td>
-<td class="value">None</td>
-</tr>
-</tbody>
-</table>
-
-            </details>
-        </div>
-    </div></div></div></div></div></div></div></div></div></div></div></div><script>function copyToClipboard(text, element) {
-    // Get the parameter prefix from the closest toggleable content
-    const toggleableContent = element.closest('.sk-toggleable__content');
-    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
-    const fullParamName = paramPrefix ? `${paramPrefix}${text}` : text;
-
-    const originalStyle = element.style;
-    const computedStyle = window.getComputedStyle(element);
-    const originalWidth = computedStyle.width;
-    const originalHTML = element.innerHTML.replace('Copied!', '');
-
-    navigator.clipboard.writeText(fullParamName)
-        .then(() => {
-            element.style.width = originalWidth;
-            element.style.color = 'green';
-            element.innerHTML = "Copied!";
-
-            setTimeout(() => {
-                element.innerHTML = originalHTML;
-                element.style = originalStyle;
-            }, 2000);
-        })
-        .catch(err => {
-            console.error('Failed to copy:', err);
-            element.style.color = 'red';
-            element.innerHTML = "Failed!";
-            setTimeout(() => {
-                element.innerHTML = originalHTML;
-                element.style = originalStyle;
-            }, 2000);
-        });
-    return false;
-}
-
-document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
-    const toggleableContent = element.closest('.sk-toggleable__content');
-    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
-    const paramName = element.parentElement.nextElementSibling.textContent.trim();
-    const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
-
-    element.setAttribute('title', fullParamName);
-});
-</script>
 </div>
 </div>
-<div class="cell" data-execution_count="8">
-<div id="tbl-decision-tree" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="8">
+</div>
+</figure>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<div id="tbl-knn-score" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="9">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-knn-score-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table 6: K-NN classifer Scores
+</figcaption>
+<div aria-describedby="tbl-knn-score-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+
+
+<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">mean_fit_time</th>
+<th data-quarto-table-cell-role="th">mean_score_time</th>
+<th data-quarto-table-cell-role="th">param_kneighborsclassifier__n_neighbors</th>
+<th data-quarto-table-cell-role="th">mean_test_score</th>
+<th data-quarto-table-cell-role="th">mean_train_score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>0.004139</td>
+<td>0.003843</td>
+<td>11</td>
+<td>0.971429</td>
+<td>0.978571</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6</td>
+<td>0.004646</td>
+<td>0.003543</td>
+<td>7</td>
+<td>0.971429</td>
+<td>0.971429</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>0.006209</td>
+<td>0.004806</td>
+<td>5</td>
+<td>0.971429</td>
+<td>0.971429</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>0.004549</td>
+<td>0.004152</td>
+<td>12</td>
+<td>0.971429</td>
+<td>0.971429</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>0.003908</td>
+<td>0.003939</td>
+<td>9</td>
+<td>0.971429</td>
+<td>0.973810</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<div id="tbl-decision-tree" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="10">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-decision-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 5: Decision tree model confusion matrix
+Table 7: Decision tree model confusion matrix
 </figcaption>
 <div aria-describedby="tbl-decision-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 
 
@@ -3928,14 +2819,14 @@ Table 5: Decision tree model confusion matrix
 </figure>
 </div>
 </div>
-<div class="cell" data-execution_count="9">
-<div id="tbl-knn" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="9">
+<div class="cell" data-execution_count="11">
+<div id="tbl-knn" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="11">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-knn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table 6: K-NN confusion matrix
+Table 8: K-NN confusion matrix
 </figcaption>
 <div aria-describedby="tbl-knn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 
 
@@ -3976,14 +2867,14 @@ Table 6: K-NN confusion matrix
 </figure>
 </div>
 </div>
-</div></div></section>
+</section>
 <section id="discussion-and-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="discussion-and-analysis">Discussion and Analysis</h2>
 <p>In our investigation of the Iris dataset, we establish whether these features are strong predictors for Iris species classification and rank their predictive power. This discussion begins with the insights derived from our in-depth exploratory data analysis, then the outcomes of our machine learning models, and finally exploring the implications for biological classification and machine learning practices for future research.<br>
 To summarize the data, the Iris dataset consists of 150 samples with measurements for four features: sepal length, sepal width, petal length, and petal width, across three evenly distributed species: Setosa, Versicolor, and Virginica.</p>
 <p>In our exploratory data analysis (EDA), the summary statistics <a href="#tbl-summary-numeric" class="quarto-xref">Table 3</a> show that petal measurements (length and width) exhibit more obvious differences across species compared to sepal feature measurements. Sepal measurements are not as varied across species and thus provide weaker separation when distinguishing species. Our visualizations of pairwise feature plots <a href="#fig-pairwise" class="quarto-xref">Figure 1</a>, and boxplots <a href="#fig-boxplot" class="quarto-xref">Figure 2</a> confirm these patterns, they each reveal the power of petal measurement for distinguishing species during classification. Specifically, the boxplot shows how the species Setosa is easily distinguishable from just its petal measurements.</p>
 <p>Both Decision Tree and KNN models perform strongly on this Iris test set (95% vs 93% accuracy, respectively). Petal and sepal feature differences allow decent separation between species, especially between the species Versicolor and Virginica. The misclassifications in confusion matrices show this overlap. The cross-validation results suggest that Decision Trees with max_depth values from 4 to 18 fit the training data perfectly while achieving similarly high validation accuracy (94.3%) on unseen folds. For the KNN hyperparameter tuning, findings show that choosing n_neighbors between 4 and 12 outputs a classification accuracy around 97% on cross-validation test scores.</p>
-<p>Examining our confusion matrix for model accuracies: - In the decision tree test performance <a href="#tbl-decision-tree" class="quarto-xref">Table 5</a>, Setosa was classified perfectly (as it is the most distinguishable), while 3 virginica got misclassified as versicolor. - In our KNN model <strong>?@tbl-KNN</strong>, we find that setosa is perfect again, and KNN misclassifies: 1 versicolor as virginica, and 2 virginica as versicolor. - This is expected as the two classes (virginica and versicolor) overlap in features.</p>
+<p>Examining our confusion matrix for model accuracies: - In the decision tree test performance <a href="#tbl-decision-tree" class="quarto-xref">Table 7</a>, Setosa was classified perfectly (as it is the most distinguishable), while 3 virginica got misclassified as versicolor. - In our KNN model <a href="#tbl-knn" class="quarto-xref">Table 8</a>, we find that setosa is perfect again, and KNN misclassifies: 1 versicolor as virginica, and 2 virginica as versicolor. - This is expected as the two classes (virginica and versicolor) overlap in features.</p>
 <p>Our decision tree model is slightly better than KNN, with better accuracy, fewer total mistakes, perfect versicolor classification, though same performance on setosa and virginica. This suggests high but not perfect predictability of iris species from its measurements, with room for improving classification on overlapping species using more advanced methods or additional features. These results demonstrate a typical well-performing classification pipeline for the Iris dataset, validating the exploratory and modeling insights</p>
 <p>The findings that petal measurements strongly separate iris species and have high model accuracy are expected and align with prior knowledge and research on the Iris dataset. The petal length and width consistently show clearer distinctions among the species, particularly separating Setosa from Versicolor and Virginica, however, Sepal measurements tend to show more overlap and offer weaker discriminatory power.</p>
 <p>However, there are some limitations associated with our study, some key limitations of the dataset and the related findings include: The dataset contains only 150 samples with 4 numeric features and 3 species classes, which is considered quite small and simple compared to data on other plant species. This limits the complexity of patterns that can be learned and makes it less applicable to more complex classification tasks. Its size also prevents it from being useful for complex machine learning techniques like deep learning, which require larger datasets. Only sepal and petal measurements are considered, and other potentially informative features such as genetic data, environmental variables, or flower color are not recorded as features in the data. This constrains prediction to specific traits and may limit generalizability to other flowers or datasets<br>
