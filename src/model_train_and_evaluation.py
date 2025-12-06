@@ -76,16 +76,14 @@ def main(training_data, test_data, models_to, tables_to):
     y_test = test_df["species"]
 
     # Decision Tree
-
-    param_grid = {"decisiontreeclassifier__max_depth": range(1, 20)}
+    param_grid = {
+        "decisiontreeclassifier__max_depth": range(1, 20)
+        }
 
     pipe = make_pipeline(StandardScaler(), DecisionTreeClassifier(random_state=123))
 
     ds_random_search, ds_result = train(X_train, y_train, pipe, param_grid)
     
-    #save decisiontree cross val result to table
-    ds_result.to_csv(os.path.join(tables_to, "ds_results.csv"), index=False)
-
     #KNN
     param_grid = {
         "kneighborsclassifier__n_neighbors": range(1,20)
@@ -95,6 +93,9 @@ def main(training_data, test_data, models_to, tables_to):
 
     knn_random_search, knn_result = train(X_train, y_train, pipe, param_grid)
 
+    #save decisiontree cross val result to table
+    ds_result.to_csv(os.path.join(tables_to, "ds_results.csv"), index=False)
+    
     #save knn cross val result to table
     knn_result.to_csv(os.path.join(tables_to, "knn_results.csv"), index=False)
 
@@ -102,13 +103,13 @@ def main(training_data, test_data, models_to, tables_to):
     decision_tree = ds_random_search.best_estimator_
     knn = knn_random_search.best_estimator_
 
-    #save knn_classifier_model into the results/models file
+    #save decision_tree model into the results/models file
     with open(os.path.join(models_to, "decision_tree.pickle"), 'wb') as f:
-        pickle.dump(ds_random_search, f)
+        pickle.dump(decision_tree, f)
 
-    #save decision_tree model results/models file
+    #save knn_classifier_model results/models file
     with open(os.path.join(models_to, "knn.pickle"), 'wb') as f:
-        pickle.dump(knn_random_search, f)
+        pickle.dump(knn, f)
 
     # Test on test set for both classification mode
 
