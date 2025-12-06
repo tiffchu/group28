@@ -32,37 +32,54 @@ def train(X_train, y_train, pipeline, param_grid, n_iter = 50, cv = 5):
     
     return search, result_df
 
-
 @click.command()
-@click.option('--training-data', type=str, help="Path to training data", default = "../data/processed/iris_train.csv")
-@click.option('--test-data', type=str, help="Path to test data", default = "../data/processed/iris_test.csv")
-@click.option('--models-to', type=str, help="Path to directory where the pipeline object will be written to", default = "../results/models")
-@click.option('--tables-to', type=str, help="Path to directory where evaluation tables will be written to",default="../results/tables")
+@click.option(
+    "--training-data",
+    type=str,
+    help="Path to training data",
+    default="../data/processed/iris_train.csv",
+)
+@click.option(
+    "--test-data",
+    type=str,
+    help="Path to test data",
+    default="../data/processed/iris_test.csv",
+)
+@click.option(
+    "--models-to",
+    type=str,
+    help="Path to directory where the pipeline object will be written to",
+    default="../results/models",
+)
+@click.option(
+    "--tables-to",
+    type=str,
+    help="Path to directory where evaluation tables will be written to",
+    default="../results/tables",
+)
 
 def main(training_data, test_data, models_to, tables_to):
 
-    #this script is for training model on train set and evaluate model on both train and test set
+    # this script is for training model on train set and evaluate model on both train and test set
 
-    #create folder for models and result tables (like confusion matrix, train and test score tables)
+    # create folder for models and result tables (like confusion matrix, train and test score tables)
     os.makedirs(models_to, exist_ok=True)
     os.makedirs(tables_to, exist_ok=True)
 
     train_df = pd.read_csv(training_data)
     test_df = pd.read_csv(test_data)
-    
-    X_train = train_df.drop('species', axis=1)
-    y_train = train_df['species']
 
-    X_test = test_df.drop('species', axis=1)
-    y_test = test_df['species']
+    X_train = train_df.drop("species", axis=1)
+    y_train = train_df["species"]
 
-    #Decision Tree
+    X_test = test_df.drop("species", axis=1)
+    y_test = test_df["species"]
 
-    param_grid = {
-        "decisiontreeclassifier__max_depth": range(1,20)
-        }
+    # Decision Tree
 
-    pipe = make_pipeline(StandardScaler(), DecisionTreeClassifier())
+    param_grid = {"decisiontreeclassifier__max_depth": range(1, 20)}
+
+    pipe = make_pipeline(StandardScaler(), DecisionTreeClassifier(random_state=123))
 
     ds_random_search, ds_result = train(X_train, y_train, pipe, param_grid)
     
@@ -93,32 +110,35 @@ def main(training_data, test_data, models_to, tables_to):
     with open(os.path.join(models_to, "knn.pickle"), 'wb') as f:
         pickle.dump(knn_random_search, f)
 
-    #Test on test set for both Classifcation mode
+    # Test on test set for both classification mode
 
-    print("Decision tree model accuracy on test set: ", decision_tree.score(X_test, y_test))
+    print(
+        "Decision tree model accuracy on test set: ",
+        decision_tree.score(X_test, y_test),
+    )
 
     cm_ds = pd.DataFrame(
         confusion_matrix(y_test, decision_tree.predict(X_test)),
-        index=decision_tree.classes_, 
-        columns=decision_tree.classes_
+        index=decision_tree.classes_,
+        columns=decision_tree.classes_,
     )
     print("Decision tree model confusion matrix predict on test set:")
     print(cm_ds)
 
     cm_ds.to_csv(os.path.join(tables_to, "confusion_matrix_ds.csv"))
 
-    print('\n')
+    print("\n")
 
     print("KNN model accuracy on test set: ", knn.score(X_test, y_test))
     cm_knn = pd.DataFrame(
         confusion_matrix(y_test, knn.predict(X_test)),
-        index=knn.classes_, 
-        columns=knn.classes_
+        index=knn.classes_,
+        columns=knn.classes_,
     )
     print("K-NN confusion matrix predict on test set:")
     print(cm_knn)
 
     cm_knn.to_csv(os.path.join(tables_to, "confusion_matrix_knn.csv"))
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
