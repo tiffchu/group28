@@ -20,3 +20,4 @@ dependencies:
       - altair==6.0.0
       - pandera==0.27.0
       - vl-convert-python==1.8.0
+      - quarto-cli==1.8.26
