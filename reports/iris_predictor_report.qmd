@@ -4,8 +4,11 @@ authors: "Tiffany Chu, Gaurang Ahuja, Nguyen Nguyen, Vienne Lee"
 format:
   html:
     toc: true
-    toc-depth: 2
+    toc-depth: 3
     embed-resources: true
+  pdf:
+    toc: true
+    toc-depth: 3
 execute:
   echo: false
   warning: false
@@ -89,12 +92,16 @@ Since our goal is classification, this section will look at statistics which wil
 train_df.describe()
 ```
 
+::: {#tbl-summary-species style="width: 40%; margin: auto;"}
 ```{python}
+
 #| label: tbl-summary-species
 #| tbl-cap: "Variation per species"
+#| tbl-width: 50%
+
 train_df.groupby("species").agg(["mean", "median", "std", "min", "max"])
 ```
-
+:::
 #### Insights from Data Statistics
 
 From the above tables, we can see:
@@ -155,14 +162,15 @@ fit_ds = ds_random_search.fit(X_train, y_train)
 # pd.DataFrame(ds_random_search.cv_results_)[['mean_fit_time', 'mean_score_time', 'param_decisiontreeclassifier__max_depth', 
 #                                                          'mean_test_score', 'mean_train_score']].sort_values('mean_test_score', ascending = False).head()
 ```
-
+::: {#tbl-decisiontree-score style="width: 40%; margin: auto;"}
 ```{python}
 #| label: tbl-decisiontree-score
 #| tbl-cap: "Decision Tree Scores"
+#| tbl-width: 50%
 pd.DataFrame(ds_random_search.cv_results_)[['mean_fit_time', 'mean_score_time', 'param_decisiontreeclassifier__max_depth', 
                                                          'mean_test_score', 'mean_train_score']].sort_values('mean_test_score', ascending = False).head()
 ```
-
+:::
 ```{python}
 
 #K-NN classifer
@@ -184,15 +192,16 @@ fit_knn = knn_random_search.fit(X_train, y_train)
 # pd.DataFrame(knn_random_search.cv_results_)[['mean_fit_time', 'mean_score_time', 'param_kneighborsclassifier__n_neighbors', 
 #                                                          'mean_test_score', 'mean_train_score']].sort_values('mean_test_score', ascending = False).head()
 ```
-
+::: {#tbl-knn-score style="width: 40%; margin: auto;"}
 ```{python}
 #| label: tbl-knn-score
 #| tbl-cap: "K-NN classifer Scores"
+#| tbl-width: 50%
 
 pd.DataFrame(knn_random_search.cv_results_)[['mean_fit_time', 'mean_score_time', 'param_kneighborsclassifier__n_neighbors', 
                                                          'mean_test_score', 'mean_train_score']].sort_values('mean_test_score', ascending = False).head()
 ```
-
+:::
 ```{python}
 #| label: tbl-decision-tree
 #| tbl-cap: "Decision tree model confusion matrix"
