@@ -62,3 +62,11 @@ docker-build-local: ## Build single-arch image for local testing (current platfo
 	docker build \
 		--tag tiffchu/group28:local \
 		.
+
+
+.PHONY: clean
+clean: 
+	rm -rf data/raw\
+	rm -rf data/processed\
+	rm -rf results/figures\
+	rm -rf results
