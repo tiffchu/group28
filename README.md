@@ -8,6 +8,10 @@ Initial analysis revealed that petal length and width, especially for Setosa, ar
 Both models achieve high accuracy (~93% from the Decision Tree and ~95% from the KNN classifier) with cross-validation confirming the strong performance. Some classification errors occurred between Versicolor and Virginica due to their overlapping characteristics. In conculsion, our analysis provides evidence from both exploratory analysis and machine learning models that petal and sepal measurements do allow accurate classification, validate model performance, and highlight the biological meaning behind feature separability. Moreover, Iris species can be predicted accurately from petal and sepal measurements, with petal features providing the strongest predictive power. 
 However, there are some limitations associated with our study. Some key limitations of the dataset and the related findings include: the dataset contains only 150 samples with 4 numeric features and 3 species classes, which is considered quite small and simple compared to data on other plant species. This limits the complexity of patterns that can be learned and makes it less applicable to more complex classification tasks. Its size also prevents it from being useful for complex machine learning techniques like deep learning, which require larger datasets.
 
+## Report
+The final report can be found [here](https://tiffchu.github.io/group28/).
+
+
 ## Dependencies
 - [Docker](https://www.docker.com/) 
 - [VS Code](https://code.visualstudio.com/download)
@@ -41,7 +45,7 @@ make clean
 ```
 
 4. Now you can start running the analysis. Navigate to the `src` folder in this project and run the following command to download the Iris data.
-> Note: This will also create a `raw` folder and save the Iris data in that folder if raw folder if it doesn't exists. 
+> Note: This will also create a `raw` folder and save the Iris data in that folder if raw folder doesn't exists. 
 > If no inputs were passed, it will automatically download data from `https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv`
 ```
 python download_data.py --url https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv
