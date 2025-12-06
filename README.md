@@ -21,26 +21,10 @@ However, there are some limitations associated with our study. Some key limitati
 1. Clone this GitHub repository.
     - `git clone git@github.com:tiffchu/group28.git`
 
-#### Using the Docker Container
-You can reproduce the analysis and run the notebook in a pre configured Docker container.
-
-1. Build the Docker image
+2. Build the Docker image
     - `docker-compose build`
 This creates the `dockerlock` image with all required packages installed.
 
-2. Start the container and JupyterLab
-    - `docker-compose up`
-This will start the container, activate the `dockerlock` environment and launch JupyterLab inside the container
-
-3. Open JupyterLab in your browser at
-    - `http://localhost:8888/lab`
-
-4. Open and run notebooks
-    1. In JupyterLab, open the `iris_predictor_report.ipynb`
-    2. Run all cells
-
-5. Stop the container
-Return to the terminal where `docker-compose up` is running and press `Ctrl+C`.
 
 #### Running the analysis
 
