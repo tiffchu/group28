@@ -25,7 +25,7 @@ cl: ## create conda lock for multiple platforms
 .PHONY: env
 env: ## remove previous and create environment from lock file
 	# remove the existing env, and ignore if missing
-	conda env remove dockerlock || true
+	conda env remove -n dockerlock || true
 	conda-lock install -n dockerlock conda-lock.yml
 
 .PHONY: build
@@ -70,4 +70,4 @@ clean:
 	rm -rf data/processed
 	rm -rf results/figures
 	rm -rf results
-    rm -rf reports/iris_predictor_report.html
+	rm -rf reports/iris_predictor_report.html

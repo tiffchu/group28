@@ -28,6 +28,7 @@ The final report can be found [here](https://tiffchu.github.io/group28/).
 
 2. Build the Docker image
     - `docker-compose build`
+
 This creates the `dockerlock` image with all required packages installed.
 
 
@@ -73,6 +74,9 @@ python src/model_train_and_evaluation.py --training-data ./data/processed/iris_t
 ```
 quarto render reports/iris_predictor_report.qmd --to html
 ```
+
+Navigate to `reports` to view the generated report file called `iris_predictor_report.html`
+
 #### Clean up
 
 1. To shut down the container and clean up the resources, 
