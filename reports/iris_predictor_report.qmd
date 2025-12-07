@@ -6,9 +6,6 @@ format:
     toc: true
     toc-depth: 3
     embed-resources: true
-  pdf:
-    toc: true
-    toc-depth: 3
 execute:
   echo: false
   warning: false
@@ -34,6 +31,7 @@ There are 4 numerical features in this dataset:
 4. `petal_width`: The width of the petal
 
 There is 1 categorical feature in the dataset:
+
 1. `species`: The target variable (label)
 
 We are using the Iris dataset to answer the question: **“Can we predict the Iris species using petal and sepal measurements?”**
@@ -45,13 +43,8 @@ The data set contains 3 classes of 50 instances each, where each class refers to
 ```{python}
 #| label: tbl-data
 #| tbl-cap: "Preview of Iris Data"
-import sys
-import os
-sys.path.append("..") 
-sys.path.append("../src")  
-from src.data_loader import load_data
-url = "https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
-data = load_data(url)
+import pandas as pd
+data = pd.read_csv("../data/raw/iris.csv")
 data.head()
 ```
 
@@ -59,8 +52,7 @@ data.head()
 In the code below, we check some basic stats for the dataframe such as the number of rows, columns etc. We convert the columns names to a more standard format using underscores and lowercase. We then check how many unique species there are.
 
 ```{python}
-from sklearn.model_selection import train_test_split
-train_df, test_df = train_test_split(data, test_size=0.3, random_state=123)
+train_df = pd.read_csv("../data/processed/iris_train.csv")
 train_df_shape = train_df.shape
 ```
 
@@ -81,36 +73,38 @@ train_df.describe()
 #| tbl-cap: "Variation per species"
 train_df.groupby("species").agg(["mean", "std"])
 ```
+
 #### Insights from Data Statistics
 
 From the above tables, we can see:
-- Most species have approximately the same number of observations
-- Petal measurements display the strongest separation
-- Setosa is distinct while versicolor and virginica show some overlap
-- Petal dimensions have meaningful differences
+
+* Most species have approximately the same number of observations
+* Petal measurements display the strongest separation
+* Setosa is distinct while versicolor and virginica show some overlap
+* Petal dimensions have meaningful differences
 
 ## EDA Plots
 
-Below are the plots visualize the underlying patterns, distributions, and relationships within the three features (sepal_length, sepal_width, petal_length, petal_width) in the Iris dataset.
+Below are the plots visualize the underlying patterns, distributions, and relationships within the three features (`sepal_length`, `sepal_width`, `petal_length`, `petal_width`) in the Iris dataset.
 
 
 ### Pairwise Plot
 Pairwise plots show the relationships between feature pair and show any clusters. @fig-pairwise helps identify which pair of features show the clearest separation and allows us to identify which features are the most informative for prediction. 
 
-![Pairwise Plot of Iris Features](/figures/pairwise.png){#fig-pairwise width=90%}
+![Pairwise Plot of Iris Features](../results/figures/iris_species_pairwise.png){#fig-pairwise width=90%}
 
 ### Boxplot
 @fig-boxplot show how each feature varies across species. The median, spread, outliers, and overlaps helps identify features that are most predictive for classifying the Iris species.
 
-![Boxplot of Iris Feature Variation](/figures/boxplot.png){#fig-boxplot width=60%}
+![Boxplot of Iris Feature Variation](../results/figures/iris_species_boxplot.png){#fig-boxplot width=60%}
 
 ## Model Training Results
 
 We tried 2 models, below are the results of each. 
 
-![Decision Tree Confusion Matrix](/figures/dt_confusion.png){#fig-dt_confusion width=60%}
+![Decision Tree Confusion Matrix](/figures/dt_confusion.png){#fig-dt_confusion width=80%}
 
-![K-NN Confusion Matrix](/figures/knn_confusion.png){#fig-knn_confusion width=60%}
+![K-NN Confusion Matrix](/figures/knn_confusion.png){#fig-knn_confusion width=80%}
 
 ## Discussion and Analysis
 In our investigation of the Iris dataset, we establish whether these features are strong predictors for Iris species classification and rank their predictive power. This discussion begins with the insights derived from our in-depth exploratory data analysis, then the outcomes of our machine learning models, and finally exploring the implications for biological classification and machine learning practices for future research. \
@@ -124,9 +118,10 @@ Both Decision Tree and KNN models perform strongly on this Iris test set (95% vs
 
 
 Examining our confusion matrix for model accuracies:
-- In the decision tree test performance as seen in @fig-dt_confusion, Setosa was classified perfectly (as it is the most distinguishable), while 3 virginica got misclassified as versicolor. 
-- In our KNN model @fig-knn_confusion, we find that setosa is perfect again, and KNN misclassifies: 1 versicolor as virginica, and 2 virginica as versicolor.
-- This is expected as the two classes (virginica and versicolor) overlap in features. 
+
+* In the decision tree test performance as seen in @fig-dt_confusion, Setosa was classified perfectly (as it is the most distinguishable), while 3 virginica got misclassified as versicolor. 
+* In our KNN model @fig-knn_confusion, we find that setosa is perfect again, and KNN misclassifies: 1 versicolor as virginica, and 2 virginica as versicolor.
+* This is expected as the two classes (virginica and versicolor) overlap in features. 
 
 
 Our decision tree model is slightly better than KNN, with better accuracy, fewer total mistakes, perfect versicolor classification, though same performance on setosa and virginica.
@@ -141,18 +136,19 @@ However, there are some limitations associated with our study, some key limitati
 The dataset contains only 150 samples with 4 numeric features and 3 species classes, which is considered quite small and simple compared to data on other plant species. This limits the complexity of patterns that can be learned and makes it less applicable to more complex classification tasks. Its size also prevents it from being useful for complex machine learning techniques like deep learning, which require larger datasets.
 
 
-Only sepal and petal measurements are considered, and other potentially informative features such as genetic data, environmental variables, or flower color are not recorded as features in the data. This constrains prediction to specific traits and may limit generalizability to other flowers or datasets \
-It appears that the species Setosa is clearly separable, while Versicolor and Virginica show overlap in some measurements, leading to some classification errors and ambiguity that models must handle or risk making errors in
-The dataset is clean with no missing values or measurement noise, which is not typical/ normal in many real datasets. This means models trained here may be optimistic compared to actual real world performance
-So while appropriate for demonstrating classification approaches and feature importance, the Iris dataset's limitations prevent our model from being broadly applicable and generalizable, which must be considered when interpreting and generalizing findings. We must also note that these methods are derived from the following sources: @scikit_learn, @dsci531, @dsci571, @dsci573, and errors from these sources may translate into our research. 
+Only sepal and petal measurements are considered, and other potentially informative features such as genetic data, environmental variables, or flower color are not recorded as features in the data. This constrains prediction to specific traits and may limit generalizability to other flowers or datasets.
+
+It appears that the species Setosa is clearly separable, while Versicolor and Virginica show overlap in some measurements, leading to some classification errors and ambiguity that models must handle or risk making errors. The dataset is clean with no missing values or measurement noise, which is not typical/normal in many real datasets. This means models trained here may be optimistic compared to actual real world performance. So while appropriate for demonstrating classification approaches and feature importance, the Iris dataset's limitations prevent our model from being broadly applicable and generalizable, which must be considered when interpreting and generalizing findings. We must also note that these methods are derived from the following sources: @scikit_learn, @dsci531, @dsci571, @dsci573, and errors from these sources may translate into our research. 
 
 
-The impact of these findings is significant in practical feature selection for machine learning. They show the importance of choosing the most informative features for classification tasks, improving model performance and simplifying models by focusing on fewer but more relevant measurements. This can aid in resource efficiency and interpretability in biological studies, botany, and related scientific work. \
+The impact of these findings is significant in practical feature selection for machine learning. They show the importance of choosing the most informative features for classification tasks, improving model performance and simplifying models by focusing on fewer but more relevant measurements. This can aid in resource efficiency and interpretability in biological studies, botany, and related scientific work.
+
 This brings up future questions that could use further research:
-- How do more advanced machine learning algorithms (e.g., SVM) compare in classification accuracy using petal vs sepal features?
-- Can combining petal and sepal features with additional biological or environmental data improve model robustness or reveal deeper insights?
-- How well do these findings generalize to other flower species or datasets—can similar feature importance patterns be found?
-- Could unsupervised learning reveal new subgroups or variations in iris species beyond the three classical ones using these or other features?
+
+* How do more advanced machine learning algorithms (e.g., SVM) compare in classification accuracy using petal vs sepal features?
+* Can combining petal and sepal features with additional biological or environmental data improve model robustness or reveal deeper insights?
+* How well do these findings generalize to other flower species or datasets—can similar feature importance patterns be found?
+* Could unsupervised learning reveal new subgroups or variations in iris species beyond the three classical ones using these or other features?
 
   
 In summary, these findings are expected and show the predictive importance of petal dimensions in iris classification. They have implications for feature selection and model design, and point to further possible research on flower classification and its related biological questions

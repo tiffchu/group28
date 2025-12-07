@@ -24,6 +24,7 @@ The final report can be found [here](https://tiffchu.github.io/group28/).
 
 1. Clone this GitHub repository.
     - `git clone git@github.com:tiffchu/group28.git`
+    - `cd` into the cloned repository
 
 2. Build the Docker image
     - `docker-compose build`
@@ -52,7 +53,7 @@ python src/download_data.py --url="https://raw.githubusercontent.com/mwaskom/sea
 ```
 
 5. Next, run following command to split and preprocess the downloaded data.
-> Note: If no inputs were passed, raw data will be pulled from `../data/raw/iris.csv`. The split data will be saved into the `proprocessed` subfolder in `data` folder.
+> Note: If no inputs were passed, raw data will be pulled from `./data/raw/iris.csv`. The split data will be saved into the `proprocessed` subfolder in `data` folder.
 ```
 python src/split_preprocess.py --rawdata="./data/raw/iris.csv"
 ```
@@ -75,7 +76,7 @@ quarto render reports/iris_predictor_report.qmd --to html
 #### Clean up
 
 1. To shut down the container and clean up the resources, 
-type `Cntrl` + `C` in the terminal where you launched the container, and then type `docker compose rm`
+type `Ctrl` + `C` in the terminal where you launched the container, and then type `docker compose rm`
 
 
 ## Developer notes
