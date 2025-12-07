@@ -47,15 +47,15 @@ make clean
 
 4. Now you can start running the analysis. Open terminal in JupyterLab and type the following command to download the Iris data.
 > Note: This will also create a `raw` folder and save the Iris data in that folder if raw folder doesn't exists. 
-> If no inputs were passed, it will automatically download data from `https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv`
+> If no inputs were passed, it will automatically download data from `https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv` and save it as `./data/raw/iris.csv`
 ```
-python src/download_data.py --url="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv"
+python src/download_data.py --url="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" --path="./data/raw/iris.csv"
 ```
 
 5. Next, run following command to split and preprocess the downloaded data.
 > Note: If no inputs were passed, raw data will be pulled from `./data/raw/iris.csv`. The split data will be saved into the `proprocessed` subfolder in `data` folder.
 ```
-python src/split_preprocess.py --rawdata="./data/raw/iris.csv"
+python src/split_preprocess.py --rawdata="./data/raw/iris.csv" --path="./data/processed"
 ```
 
 6. Next, run the following command to generate EDA plots and save the plots as PNG file to `figure` subfolder in `Results` folder.
