@@ -55,13 +55,13 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
     """
 
     df = IrisPreSplitSchema.validate(df)
-    print("Schema validation passed (columns + types + basic ranges)")
+    print("\nSchema validation passed (columns + types + basic ranges)\n")
 
     ##Checking for empty rows
     empty_rows = (df == "").all(axis=1).sum()
     if empty_rows > 0:
         raise ValueError(f"Found {empty_rows} completely empty rows")
-    print("No empty rows")
+    print("No empty rows\n")
 
     ##Checking for duplicates
     total_rows = df.shape[0]
@@ -69,25 +69,25 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
     duplicate_count = df.duplicated().sum()
     if duplicate_count > 0:
         print(
-            f"Validation FAILED: Found {duplicate_count} duplicate rows. They will be dropped. \nThe dataset now have {total_rows - duplicate_count} rows and {total_columns} columns."
+            f"Validation FAILED: Found {duplicate_count} duplicate rows. They will be dropped. \nThe dataset now has {total_rows - duplicate_count} rows and {total_columns} columns.\n"
         )
         df = df.drop_duplicates()
     else:
-        print("No duplicate rows")
+        print("No duplicate rows\n")
 
     # Checking for target Correct category levels
     species_levels = df["species"].unique()
     expected_levels = ["setosa", "versicolor", "virginica"]
     if not set(species_levels).issubset(set(expected_levels)):
         raise ValueError(f"Unexpected species levels found: {species_levels}")
-    print("Species categories OK")
+    print("Species categories OK\n")
 
     # Checking Target/response variable follows expected distribution
     target_counts = df["species"].value_counts(normalize=True)
     if (target_counts < 0.1).any():
         print(f"Validation FAILED: Some species underrepresented:\n{target_counts}")
     else:
-        print("Target variable distribution looks reasonable")
+        print("Target variable distribution looks reasonable\n")
 
     # Checking outlier or anomalous values
     # Z-score outlier check (helper function))
@@ -125,10 +125,10 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
 
     try:
         validated_df = schema.validate(df, lazy=True)
-        print("No outliers detected!")
+        print("No outliers detected!\n")
     except pa.errors.SchemaErrors as err:
         print(
-            "Validation FAILED: Outliers detected! Might want to consider using StandardScaler transformation."
+            "Validation FAILED: Outliers detected! Might want to consider using StandardScaler transformation.\n"
         )
 
     ## Checking missingness not beyond expected threshold
@@ -149,10 +149,10 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
     )
     try:
         validated_df = schema.validate(df, lazy=True)
-        print("Missingness is within allowed limits.")
+        print("Missingness is within allowed limits.\n")
     except pa.errors.SchemaErrors as err:
         print(
-            "Validation FAILED: Missingness exceeds threshold! \n May want to consider using SimpleImputer along with other transformations when training the model."
+            "Validation FAILED: Missingness exceeds threshold! \n May want to consider using SimpleImputer along with other transformations when training the model.\n"
         )
 
     # Target–feature correlations
@@ -163,12 +163,12 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
     for feat, corr in correlation_tar.items():
         if abs(corr) > 0.95:
             print(
-                f"Warning: Feature {feat} has way to high correlation with the target column (species) and could lead to ovefitting or data leakage: {corr}"
+                f"Warning: Feature {feat} has way to high correlation with the target column (species) and could lead to ovefitting or data leakage: {corr}\n"
             )
             corrfeat_result.append("problem")
 
     if len(corrfeat_result) == 0:
-        print("Target-feature correlations is in an acceptable range")
+        print("Target-feature correlations is in an acceptable range\n")
 
     # feature-feature correlations
     corr_corr_result = []
@@ -180,11 +180,11 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
 
             if abs(correlation_feat) > 0.95:
                 print(
-                    f"Warning: Features '{num_col[i]}' and '{num_col[j]}' are too correlated and could lead to multicollinearity or repeat feature: {correlation_feat}"
+                    f"Warning: Features '{num_col[i]}' and '{num_col[j]}' are too correlated and could lead to multicollinearity or repeat feature: {correlation_feat}\n"
                 )
                 corr_corr_result.append("problem")
 
     if len(corr_corr_result) == 0:
-        print("Feature-feature correlations is in an acceptable range")
+        print("Feature-feature correlations is in an acceptable range\n")
 
     return validated_df

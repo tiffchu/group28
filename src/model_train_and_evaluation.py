@@ -114,7 +114,7 @@ def main(training_data, test_data, models_to, tables_to):
     # Test on test set for both classification mode
 
     print(
-        "Decision tree model accuracy on test set: ",
+        "\nDecision tree model accuracy on test set: ",
         decision_tree.score(X_test, y_test),
     )
 
@@ -123,7 +123,7 @@ def main(training_data, test_data, models_to, tables_to):
         index=decision_tree.classes_,
         columns=decision_tree.classes_,
     )
-    print("Decision tree model confusion matrix predict on test set:")
+    print("\nDecision tree model confusion matrix predict on test set:")
     print(cm_ds)
 
     cm_ds.to_csv(os.path.join(tables_to, "confusion_matrix_ds.csv"))
@@ -136,7 +136,7 @@ def main(training_data, test_data, models_to, tables_to):
         index=knn.classes_,
         columns=knn.classes_,
     )
-    print("K-NN confusion matrix predict on test set:")
+    print("\nK-NN confusion matrix predict on test set:")
     print(cm_knn)
 
     cm_knn.to_csv(os.path.join(tables_to, "confusion_matrix_knn.csv"))

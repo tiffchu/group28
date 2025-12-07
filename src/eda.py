@@ -5,8 +5,8 @@ import os
 
 
 @click.command()
-@click.option('--training-data', type=str, help="Path to processed training data", default = '../data/processed/iris_train.csv', show_default=True)
-@click.option('--plot-to', type=str, help="Path to directory where the plot will be written to", default = '../results/figures/', show_default=True)
+@click.option('--training-data', type=str, help="Path to processed training data", default = './data/processed/iris_train.csv', show_default=True)
+@click.option('--plot-to', type=str, help="Path to directory where the plot will be written to", default = './results/figures/', show_default=True)
 def main(training_data, plot_to):
     ''' 
     Generate EDA plots and save them in results/figure folder.
@@ -24,7 +24,7 @@ def main(training_data, plot_to):
         ).legend(None)
     ).properties(
         title = alt.TitleParams(
-            text = "Figure 1: Count of Iris Species",
+            text = "Count of Iris Species",
             anchor = 'start',
             fontSize = 15
         )
@@ -47,7 +47,7 @@ def main(training_data, plot_to):
                 row=['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
             ).properties(
                 title = alt.TitleParams(
-                    text = "Figure 2: Relationship Between Iris Features",
+                    text = "Relationship Between Iris Features",
                     fontSize = 18
                 ))
 
@@ -92,7 +92,7 @@ def main(training_data, plot_to):
 
     box_plot = (sepal_length_BP & sepal_width_BP & petal_length_BP & petal_width_BP).properties(
         title = alt.TitleParams(
-            text = "Figure 3: Iris Feature Distributions by Species",
+            text = "Iris Feature Distributions by Species",
             fontSize = 14))
 
     os.makedirs(plot_to, exist_ok = True)
@@ -101,7 +101,7 @@ def main(training_data, plot_to):
     box_plot.save(os.path.join(plot_to, "iris_species_boxplot.png"), scale_factor=2.0)
     pairwise_plot.save(os.path.join(plot_to, "iris_species_pairwise.png"), scale_factor=2.0)
 
-    print('The EDA plots are saved in ./results/figure directory.')
+    print('The EDA plots are saved in ./results/figures directory.')
 
 if __name__ == '__main__':
     main()

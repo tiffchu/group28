@@ -70,3 +70,4 @@ clean:
 	rm -rf data/processed
 	rm -rf results/figures
 	rm -rf results
+    rm -rf reports/iris_predictor_report.html
