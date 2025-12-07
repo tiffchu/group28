@@ -101,7 +101,7 @@ def main(training_data, plot_to):
     box_plot.save(os.path.join(plot_to, "iris_species_boxplot.png"), scale_factor=2.0)
     pairwise_plot.save(os.path.join(plot_to, "iris_species_pairwise.png"), scale_factor=2.0)
 
-    print('The EDA plots are saved in ../data/results/figure directory.')
+    print('The EDA plots are saved in ./results/figure directory.')
 
 if __name__ == '__main__':
     main()

@@ -37,25 +37,25 @@ def train(X_train, y_train, pipeline, param_grid, n_iter = 50, cv = 5):
     "--training-data",
     type=str,
     help="Path to training data",
-    default="../data/processed/iris_train.csv",
+    default="./data/processed/iris_train.csv",
 )
 @click.option(
     "--test-data",
     type=str,
     help="Path to test data",
-    default="../data/processed/iris_test.csv",
+    default="./data/processed/iris_test.csv",
 )
 @click.option(
     "--models-to",
     type=str,
     help="Path to directory where the pipeline object will be written to",
-    default="../results/models",
+    default="./results/models",
 )
 @click.option(
     "--tables-to",
     type=str,
     help="Path to directory where evaluation tables will be written to",
-    default="../results/tables",
+    default="./results/tables",
 )
 
 def main(training_data, test_data, models_to, tables_to):
