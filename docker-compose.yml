@@ -1,5 +1,6 @@
 services:
   dockerlock:
+    image: tiffanymchu/docker-condalock-jupyterlab:v0.0.3
     build:
       context: .
       dockerfile: Dockerfile
