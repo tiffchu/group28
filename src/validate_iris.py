@@ -2,7 +2,6 @@ import pandas as pd
 import pandera.pandas as pa
 from pandera import Column, Check
 import numpy as np
-from typing import Tuple
 
 
 class IrisPreSplitSchema(pa.DataFrameModel):
