@@ -16,99 +16,70 @@ class IrisPreSplitSchema(pa.DataFrameModel):
         coerce = True  # Convert types if possible
 
 
-def validate_data(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Validate the Iris dataset for use in analysis or modeling.
+def check_zscore(series: pd.Series, threshold: float = 3.0) -> pd.Series:
+    """Returns True for each value that is NOT an outlier by Z-score."""
+    z = (series - series.mean()) / series.std()
+    return z.abs() <= threshold
 
-    Performs schema validation, checks for empty rows, duplicates,
-    valid category levels, and basic target distribution sanity.
 
-    Parameters
-    ----------
-    df : pd.DataFrame
-        The Iris dataset to validate. Expected columns:
-        ['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'species']
+def check_iqr(series: pd.Series, factor: float = 1.5) -> pd.Series:
+    """Returns True for each value that is NOT an outlier by IQR."""
+    q1 = series.quantile(0.25)
+    q3 = series.quantile(0.75)
+    iqr = q3 - q1
+    return (series >= q1 - factor * iqr) & (series <= q3 + factor * iqr)
 
-    Returns
-    -------
-    pd.DataFrame
-        Cleaned and validated DataFrame. Duplicate rows are dropped.
 
-    Raises
-    ------
-    ValueError
-        If completely empty rows are found.
-        If unexpected species categories are present.
-
-    Notes
-    -----
-    Checks performed:
-    1. Schema validation (column names, types, numeric ranges 0-10, strict columns)
-    2. No completely empty rows
-    3. Duplicate rows are removed
-    4. Species column has only allowed levels: 'setosa', 'versicolor', 'virginica'
-    5. Target variable distribution sanity (warns if any species < 10% of dataset)
-    6. Check for outlier or anomalous values
-    7. Check whether the proportion of missing data is higher than the threshold
-    8. Correlation between target and explanatory features to avoid ovefitting or data leakage
-    9. Correlation between explanatory features to avoid multicollinearity or redundant feature
-    """
-
-    df = IrisPreSplitSchema.validate(df)
-    print("\nSchema validation passed (columns + types + basic ranges)\n")
-
-    ##Checking for empty rows
+def check_empty_rows(df: pd.DataFrame):
+    """Checks for and raises an error if completely empty rows are found."""
     empty_rows = (df == "").all(axis=1).sum()
     if empty_rows > 0:
         raise ValueError(f"Found {empty_rows} completely empty rows")
-    print("No empty rows\n")
+    print("Check: No completely empty rows found.")
 
-    ##Checking for duplicates
-    total_rows = df.shape[0]
-    total_columns = df.shape[1]
+
+def check_duplicates(df: pd.DataFrame) -> pd.DataFrame:
+    """Checks for duplicates and drops them, returning the cleaned DataFrame."""
     duplicate_count = df.duplicated().sum()
     if duplicate_count > 0:
+        cleaned_df = df.drop_duplicates()
         print(
-            f"Validation FAILED: Found {duplicate_count} duplicate rows. They will be dropped. \nThe dataset now has {total_rows - duplicate_count} rows and {total_columns} columns.\n"
+            f"Check: {duplicate_count} duplicate rows found and dropped. "
+            f"New shape: {cleaned_df.shape}"
         )
-        df = df.drop_duplicates()
+        return cleaned_df
     else:
-        print("No duplicate rows\n")
+        print("Check: No duplicate rows found.")
+        return df
 
-    # Checking for target Correct category levels
+
+def check_species_levels(df: pd.DataFrame):
+    """Checks if the 'species' column contains only expected category levels."""
     species_levels = df["species"].unique()
     expected_levels = ["setosa", "versicolor", "virginica"]
     if not set(species_levels).issubset(set(expected_levels)):
         raise ValueError(f"Unexpected species levels found: {species_levels}")
-    print("Species categories OK\n")
+    print("Check: Species categories OK.")
 
-    # Checking Target/response variable follows expected distribution
+
+def check_target_distribution(df: pd.DataFrame, min_proportion: float = 0.1):
+    """Checks if any species is underrepresented below a minimum proportion."""
     target_counts = df["species"].value_counts(normalize=True)
-    if (target_counts < 0.1).any():
-        print(f"Validation FAILED: Some species underrepresented:\n{target_counts}")
+    if (target_counts < min_proportion).any():
+        print(
+            f"Warning: Target distribution issue. Some species under {min_proportion*100:.0f}%:\n"
+            f"{target_counts[target_counts < min_proportion]}"
+        )
     else:
-        print("Target variable distribution looks reasonable\n")
+        print("Check: Target variable distribution looks reasonable.")
 
-    # Checking outlier or anomalous values
-    # Z-score outlier check (helper function))
-    def check_zscore(series: pd.Series, threshold: float = 3.0) -> pd.Series:
-        """
-        Returns True for each value that is NOT an outlier by Z-score
-        """
-        z = (series - series.mean()) / series.std()
-        return z.abs() <= threshold
 
-    def check_iqr(series: pd.Series, factor: float = 1.5) -> pd.Series:
-        """
-        Returns True for each value that is NOT an outlier by IQR
-        """
-        q1 = series.quantile(0.25)
-        q3 = series.quantile(0.75)
-        iqr = q3 - q1
-        return (series >= q1 - factor * iqr) & (series <= q3 + factor * iqr)
+def check_outliers(df: pd.DataFrame):
+    """Performs Z-score and IQR outlier checks using pandera."""
+    float_cols = df.select_dtypes(include="float").columns
 
-    # outlier check
-    schema = pa.DataFrameSchema(
+    # Only validate numeric columns
+    outlier_schema = pa.DataFrameSchema(
         {
             col: Column(
                 dtype=float,
@@ -119,24 +90,26 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
                     Check(lambda s: check_iqr(s), error=f"{col} has IQR outliers"),
                 ],
             )
-            for col in df.select_dtypes(include="float").columns
+            for col in float_cols
         }
     )
 
     try:
-        validated_df = schema.validate(df, lazy=True)
-        print("No outliers detected!\n")
+        # Use only the float columns for validation
+        outlier_schema.validate(df[float_cols], lazy=True)
+        print("Check: No significant outliers detected!")
     except pa.errors.SchemaErrors as err:
         print(
-            "Validation FAILED: Outliers detected! Might want to consider using StandardScaler transformation.\n"
+            "Warning: Outliers detected! Consider using StandardScaler transformation for the affected features."
         )
 
-    ## Checking missingness not beyond expected threshold
-    threshold = 0.05
-    schema = pa.DataFrameSchema(
+
+def check_missing_data(df: pd.DataFrame, threshold: float = 0.05):
+    """Checks if missingness in any column exceeds the allowed threshold."""
+    missing_schema = pa.DataFrameSchema(
         {
             col: Column(
-                dtype=df[col].dtype if col != "target" else int,
+                dtype=df[col].dtype,
                 checks=[
                     Check(
                         lambda s: s.isna().mean() < threshold,
@@ -148,43 +121,102 @@ def validate_data(df: pd.DataFrame) -> pd.DataFrame:
         }
     )
     try:
-        validated_df = schema.validate(df, lazy=True)
-        print("Missingness is within allowed limits.\n")
+        missing_schema.validate(df, lazy=True)
+        print("Check: Missingness is within allowed limits.")
     except pa.errors.SchemaErrors as err:
         print(
-            "Validation FAILED: Missingness exceeds threshold! \n May want to consider using SimpleImputer along with other transformations when training the model.\n"
+            "Warning: Missingness exceeds threshold in one or more columns! "
+            "Consider using an imputer when training the model."
         )
 
-    # Target–feature correlations
-    corrfeat_result = []
+
+def check_correlations(df: pd.DataFrame, threshold: float = 0.95):
+    """
+    Checks for high target-feature and feature-feature correlations.
+
+    This combines two correlation checks into one function for efficiency.
+    """
+    feature_df = df.drop(columns="species", errors="ignore")
+    num_cols = feature_df.select_dtypes(include=np.number).columns
+
+    if feature_df.empty or len(num_cols) < 2:
+        print(
+            "Warning: Skipping correlation checks due to insufficient numeric features."
+        )
+        return
+
+    # 1. Target–Feature Correlations
     target_species = df["species"].astype("category").cat.codes
-    feature_df = df.drop(columns="species")
-    correlation_tar = feature_df.corrwith(target_species, method="pearson")
-    for feat, corr in correlation_tar.items():
-        if abs(corr) > 0.95:
-            print(
-                f"Warning: Feature {feat} has way to high correlation with the target column (species) and could lead to ovefitting or data leakage: {corr}\n"
-            )
-            corrfeat_result.append("problem")
+    target_corr = feature_df[num_cols].corrwith(target_species, method="pearson")
 
-    if len(corrfeat_result) == 0:
-        print("Target-feature correlations is in an acceptable range\n")
+    high_target_corr = target_corr[target_corr.abs() > threshold]
+    if not high_target_corr.empty:
+        print(
+            f"Warning: High Target-Feature Correlation (> {threshold:.2f}) found. "
+            f"Could indicate data leakage or risk of overfitting:\n{high_target_corr}"
+        )
+    else:
+        print("Check: Target-feature correlations are in an acceptable range.")
 
-    # feature-feature correlations
-    corr_corr_result = []
-    num_col = list(feature_df.columns)
+    # 2. Feature-Feature Correlations (Multicollinearity)
+    corr_matrix = feature_df[num_cols].corr().abs()
+    # Filter for upper triangle (k=1) and correlations > threshold
+    upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(bool))
+    high_corr_pairs = upper[upper > threshold].stack()
 
-    for i in range(len(num_col)):
-        for j in range(i + 1, len(num_col)):
-            correlation_feat = feature_df[num_col[i]].corr(feature_df[num_col[j]])
+    if not high_corr_pairs.empty:
+        print(
+            f"Warning: High Feature-Feature Correlation (> {threshold:.2f}) found. "
+            f"Consider removing redundant features to avoid multicollinearity:\n{high_corr_pairs}"
+        )
+    else:
+        print("Check: Feature-feature correlations are in an acceptable range.")
 
-            if abs(correlation_feat) > 0.95:
-                print(
-                    f"Warning: Features '{num_col[i]}' and '{num_col[j]}' are too correlated and could lead to multicollinearity or repeat feature: {correlation_feat}\n"
-                )
-                corr_corr_result.append("problem")
 
-    if len(corr_corr_result) == 0:
-        print("Feature-feature correlations is in an acceptable range\n")
+def validate_data(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Orchestrates data validation checks.
 
-    return validated_df
+    1. Schema validation (mandatory first step).
+    2. Drops duplicates (mandatory cleaning step).
+    3. Runs remaining checks (non-blocking errors issue warnings or raise specific errors).
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The Iris dataset to validate.
+
+    Returns
+    -------
+    pd.DataFrame
+        Cleaned and validated DataFrame (duplicates removed).
+
+    Raises
+    ------
+    ValueError
+        If completely empty rows or unexpected species levels are found.
+    pandera.errors.SchemaErrors
+        If the initial schema validation fails.
+    """
+    print("--- Starting Data Validation ---\n")
+
+    # 1. Mandatory Schema Validation (Pandera handles column/type checks)
+    # The returned df is type-coerced and validated against basic ranges (0-10).
+    df = IrisPreSplitSchema.validate(df)
+    print("Check: Initial schema validation passed (columns + types + ranges).\n")
+
+    # 2. Checks that modify or block data processing
+    check_empty_rows(df.copy())  # Use a copy so original validation is maintained
+    df = check_duplicates(df)
+
+    print("\n--- Running Non-Blocking Checks ---\n")
+
+    # 3. Non-blocking checks (issue warnings or print status)
+    check_species_levels(df)
+    check_target_distribution(df)
+    check_outliers(df)
+    check_missing_data(df)
+    check_correlations(df)
+
+    print("\n--- Data Validation Complete ---")
+    return df
