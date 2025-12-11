@@ -14,7 +14,7 @@ def save_model(model, path):
     model : any
         The optimized trained model. After model.best_estimator_
     path : str
-        The file path where the model is saved to.
+        The file path where the model is saved to. Usually it is models_to.
 
     Returns
     -------
@@ -23,7 +23,7 @@ def save_model(model, path):
     Examples
     --------
     >>> model = decision_tree_random_search.best_estimator_
-    >>> save_model(model, f"{models_to}/decision_tree.pickle")
+    >>> save_model(model, f"{path}/decision_tree.pickle")
 
     """
     
