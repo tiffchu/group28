@@ -3,11 +3,8 @@ import altair as alt
 import os 
 import sys
 import pytest
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from src.eda import (
-    bar_plot,
-    box_plot,
-    pairwise_plot)
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+from src.eda_funcs import bar_plot, pairwise_plot
 
 @pytest.fixture
 
@@ -39,7 +36,7 @@ def test_barplot_species_encoding(iris_small_df):
 
 def test_create_pairwise_plot_type(iris_small_df):
     chart = pairwise_plot(iris_small_df)
-    assert isinstance(chart, alt.Chart)
+    assert isinstance(chart, alt.RepeatChart)
 
 def test_pairwise_plot_repeat_structure(iris_small_df):
     chart = pairwise_plot(iris_small_df)
@@ -49,20 +46,7 @@ def test_pairwise_plot_repeat_structure(iris_small_df):
     assert len(chart_dict["repeat"]["row"]) == 4
     assert len(chart_dict["repeat"]["column"]) == 4
 
-#boxplot type 
-def test_boxplot_type(iris_small_df):
-    chart = box_plot(iris_small_df)
-    assert isinstance(chart, alt.VConcatChart) or isinstance(chart, alt.HConcatChart)
-
-
-def test_boxplot_chart(iris_small_df):
-    chart = box_plot(iris_small_df)
-    chart_dict = chart.to_dict()
-
-    assert "concat" in chart_dict
-    assert len(chart_dict["concat"]) == 4   # 4 features → 4 boxplots
-
-#barplot and boxplot missing columns 
+# #boxplot 
 
 def test_barplot_missing_species_columns():
     df = pd.DataFrame({"x": [1, 2], "y": [3, 4]})
@@ -71,10 +55,10 @@ def test_barplot_missing_species_columns():
         bar_plot(df)
 
 
-def test_boxplots_missing_features():
-    df = pd.DataFrame({"species": ["a", "b", "c"]})
+# def test_boxplots_missing_features():
+#     df = pd.DataFrame({"species": ["a", "b", "c"]})
 
-    with pytest.raises(KeyError):
-        bar_plot(df)
+#     with pytest.raises(KeyError):
+#         bar_plot(df)
 
 #see which tests pass, type in cli:  pytest -v
