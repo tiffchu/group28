@@ -1,10 +1,9 @@
 services:
   dockerlock:
-    image: tiffanymchu/docker-condalock-jupyterlab:v0.0.3
+    image: tiffanymchu/docker-condalock-jupyterlab:v0.0.3   # default: pull from Docker Hub
     build:
       context: .
-      dockerfile: Dockerfile
-    image: dockerlock
+      dockerfile: Dockerfile                                # optional: build locally if you run with --build
     container_name: dockerlock
     ports:
       - "8888:8888"
