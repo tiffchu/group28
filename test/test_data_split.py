@@ -1,7 +1,9 @@
 import pandas as pd
 import pytest
+import sys, os
+
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from src.data_split import split_data
-from typing import List
 
 
 @pytest.fixture
