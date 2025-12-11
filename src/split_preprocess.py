@@ -1,8 +1,8 @@
 import click
-from sklearn.model_selection import train_test_split
 import pandas as pd
 from validate_iris import validate_data
 import os
+from src.data_split import split_data
 
 
 @click.command()
@@ -20,15 +20,30 @@ import os
     default="./data/processed",
     show_default=True,
 )
-def main(rawdata, path):
-    """Perform data validation on raw data, clean up the data column names, and split the data into train and test data set"""
+@click.option(
+    "--test-size",
+    type=float,
+    help="Proportion of data to use for test split",
+    default=0.3,
+    show_default=True,
+)
+@click.option(
+    "--random-state",
+    type=int,
+    help="Random seed for reproducibility of the split",
+    default=123,
+    show_default=True,
+)
+def main(rawdata, path, test_size, random_state):
+    """Perform data validation on raw data, clean up the data column names,
+    and split the data into train and test data set"""
 
     df = pd.read_csv(rawdata)
     df = df.loc[:, "sepal_length":]
     validated_data = validate_data(df)
 
-    train_df, test_df = train_test_split(
-        validated_data, test_size=0.3, random_state=123
+    train_df, test_df = split_data(
+        validated_data, test_size=test_size, random_state=random_state
     )
 
     # output_dir = "./data/processed/"
