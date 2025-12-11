@@ -10,12 +10,6 @@ from src.eda import (
     pairwise_plot)
 
 @pytest.fixture
-def sample_dataframe():
-    return pd.DataFrame({
-        "class": ["Benign", "Malignant"],
-        "mean_radius": [6.1, 7.8],
-        "mean_area": [145.2, 156.1],
-    })
 
 def iris_small_df():
     """mock dataset for testing"""
