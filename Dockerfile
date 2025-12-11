@@ -1,14 +1,16 @@
-# use the miniforge base, make sure you specify a verion
-# 11/27/2025
+# Use Miniforge as base
 FROM condaforge/miniforge3:25.11.0-0
+
+# Install system dependencies (make)
+RUN apt-get update && apt-get install -y make && rm -rf /var/lib/apt/lists/*
 
 # copy the lockfile into the container
 COPY conda-lock.yml conda-lock.yml
 
-# setup conda-lock
+# Install conda-lock in base environment
 RUN conda install -n base -c conda-forge conda-lock -y
 
-# install packages from lockfile into dockerlock environment
+# Create dockerlock environment from lockfile
 RUN conda-lock install -n dockerlock conda-lock.yml
 
 # make dockerlock the default environment
