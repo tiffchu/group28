@@ -26,7 +26,7 @@ def save_model(model, path):
     >>> save_model(model, f"{models_to}/decision_tree.pickle")
 
     """
-
+    
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, 'wb') as f:
         pickle.dump(model, f)
