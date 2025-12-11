@@ -55,8 +55,9 @@ python src/download_data.py --url="https://raw.githubusercontent.com/mwaskom/sea
 
 5. Next, run following command to split and preprocess the downloaded data.
 > Note: If no inputs were passed, raw data will be pulled from `./data/raw/iris.csv`. The split data will be saved into the `proprocessed` subfolder in `data` folder.
+> The script accepts optional `--test-size` and `--random-state` arguments, defaulting to a 70/30 train/test split with a random_state of 123.
 ```
-python src/split_preprocess.py --rawdata="./data/raw/iris.csv" --path="./data/processed"
+python src/split_preprocess.py --rawdata="./data/raw/iris.csv" --path="./data/processed" --test-size=0.3 --random-state=123
 ```
 
 6. Next, run the following command to generate EDA plots and save the plots as PNG file to `figure` subfolder in `Results` folder.
