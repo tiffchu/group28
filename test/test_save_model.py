@@ -55,5 +55,3 @@ def test_save_model_content_similar_to_created_model(dummy_data, tmp_path):
     assert (load_model.predict(X) == sample_model.predict(X)).all()
     assert load_model.max_depth == 10
     assert load_model.get_depth() == sample_model.get_depth()
-
-#depth of decision tree -> if its none or someother value we input
