@@ -75,20 +75,20 @@ results/models/decision_tree.pickle results/models/knn.pickle results/tables/con
 reports/iris_predictor_report.html: reports/iris_predictor_report.qmd 
 	quarto render reports/iris_predictor_report.qmd --to html
 
-all:
-	make data/raw/iris.csv
-	make data/processed/iris_test.csv
-	make data/processed/iris_train.csv
-	make results/figures/iris_species_barplot.png
-	make results/figures/iris_species_boxplot.png
-	make results/figures/iris_species_pairwise.png
-	make results/models/decision_tree.pickle
-	make results/models/knn.pickle
-	make results/tables/confusion_matrix_ds.csv
-	make results/tables/confusion_matrix_knn.csv
-	make results/tables/ds_results.csv
-	make results/tables/knn_results.csv
-	make reports/iris_predictor_report.html
+all: \
+	data/raw/iris.csv \
+	data/processed/iris_test.csv \
+	data/processed/iris_train.csv \
+	results/figures/iris_species_barplot.png \
+	results/figures/iris_species_boxplot.png \
+	results/figures/iris_species_pairwise.png \
+	results/models/decision_tree.pickle \
+	results/models/knn.pickle \
+	results/tables/confusion_matrix_ds.csv \
+	results/tables/confusion_matrix_knn.csv \
+	results/tables/ds_results.csv \
+	results/tables/knn_results.csv \
+	reports/iris_predictor_report.html 
 
 clean: 
 	rm -rf data/raw
