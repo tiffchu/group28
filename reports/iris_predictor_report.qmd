@@ -102,9 +102,9 @@ Pairwise plots show the relationships between feature pair and show any clusters
 
 We tried 2 models, below are the results of each. 
 
-![Decision Tree Confusion Matrix](/figures/dt_confusion.png){#fig-dt_confusion width=80%}
+![Decision Tree Confusion Matrix](../reports/figures/dt_confusion.png){#fig-dt_confusion width=80%}
 
-![K-NN Confusion Matrix](/figures/knn_confusion.png){#fig-knn_confusion width=80%}
+![K-NN Confusion Matrix](../reports/figures/knn_confusion.png){#fig-knn_confusion width=80%}
 
 ## Discussion and Analysis
 In our investigation of the Iris dataset, we establish whether these features are strong predictors for Iris species classification and rank their predictive power. This discussion begins with the insights derived from our in-depth exploratory data analysis, then the outcomes of our machine learning models, and finally exploring the implications for biological classification and machine learning practices for future research. \
