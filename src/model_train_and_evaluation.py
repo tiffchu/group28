@@ -8,6 +8,7 @@ import pandas as pd
 import click
 import pickle
 import os
+import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from src.save_model import save_model
