@@ -1,8 +1,9 @@
 import click
 import pandas as pd
+import sys, os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from validate_iris import validate_data
-import os
-from src.data_split import split_data
+from data_split import split_data
 
 
 @click.command()

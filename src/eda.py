@@ -1,7 +1,8 @@
 import click
 import pandas as pd
 import altair as alt
-import os
+import sys, os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 from src.make_boxplot import make_boxplot
 
 
