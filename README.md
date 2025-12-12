@@ -66,10 +66,9 @@ type `Ctrl` + `C` in the terminal where you launched the container, and then typ
 
 ### Adding a new dependency
 1. Please look at the `environment.yml` file for a list of dependencies required to run this project. You can also refer to the `conda-lock.yml` file.
-Sample command: `conda env create --name <my-env-name> --file <path/to/environment.yml>`
-2. Run `conda-lock -k explicit --file environment.yml -p linux-64` to update the `conda-linux-64.lock` file.
-3. Re-build the Docker image locally to ensure it builds and runs properly.
-4. Push the changes to GitHub. A new Docker image will be built and pushed to Docker Hub automatically. It will be tagged with the SHA for the commit that changed the file.
+Sample command to create a virtual environment: `conda env create --name <my-env-name> --file <path/to/environment.yml>`
+2. if you add any new dependency, you don't need to explicitly generate a new lock file.
+4. Push up the changes to GitHub. The workflow will update the lockfile and a new Docker image will be built and pushed to Docker Hub automatically. It will be tagged with the SHA for the commit that changed the file.
 5. Update the `docker-compose.yml` file on your branch to use the new container image (make sure to update the tag specifically).
 6. Send a pull request to merge the changes into the `main` branch.
 
