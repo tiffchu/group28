@@ -1,7 +1,9 @@
 import click
 import pandas as pd
 import altair as alt
-import os
+import sys, os
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+from src.make_boxplot import make_boxplot
 
 
 @click.command()
@@ -51,45 +53,14 @@ def main(training_data, plot_to):
                     fontSize = 18
                 ))
 
-    sepal_length_BP = alt.Chart(train_data).mark_boxplot().encode(
-     x = alt.X("sepal_length").title("Sepal Length"),
-     y = alt.Y("species").title("Species"),
-    color = alt.Color("species",
-    scale=alt.Scale(
-            domain=['setosa', 'versicolor', 'virginica'],
-            range=['blue', 'orange', 'green'])
-    ).legend(None)
-)
+    sepal_length_BP = make_boxplot(train_data, "sepal_length", "Sepal Length")
 
-    sepal_width_BP = alt.Chart(train_data).mark_boxplot().encode(
-        x = alt.X("sepal_width").title("Sepal Width"),
-        y = alt.Y("species").title("Species"),
-        color = alt.Color("species",
-        scale=alt.Scale(
-                domain=['setosa', 'versicolor', 'virginica'],
-                range=['blue', 'orange', 'green'])
-        ).legend(None)
-    )
+    sepal_width_BP = make_boxplot(train_data, "sepal_width", "Sepal Width")
+
+    petal_length_BP = make_boxplot(train_data, "petal_length", "Petal Length")
     
-    petal_length_BP = alt.Chart(train_data).mark_boxplot().encode(
-        x = alt.X("petal_length").title("Petal Length"),
-        y = alt.Y("species").title("Species"),
-        color = alt.Color("species",
-        scale=alt.Scale(
-                domain=['setosa', 'versicolor', 'virginica'],
-                range=['blue', 'orange', 'green'])
-        ).legend(None)
-    )
-
-    petal_width_BP = alt.Chart(train_data).mark_boxplot().encode(
-        x = alt.X("petal_width").title("Petal Width"),
-        y = alt.Y("species").title("Species"),
-        color = alt.Color("species",
-        scale=alt.Scale(
-                domain=['setosa', 'versicolor', 'virginica'],
-                range=['blue', 'orange', 'green'])
-        ).legend(None))
-
+    petal_width_BP = make_boxplot(train_data, "petal_width", "Petal Width")
+    
     box_plot = (sepal_length_BP & sepal_width_BP & petal_length_BP & petal_width_BP).properties(
         title = alt.TitleParams(
             text = "Iris Feature Distributions by Species",
