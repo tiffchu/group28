@@ -8,6 +8,10 @@ import pandas as pd
 import click
 import pickle
 import os
+import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
+from src.save_model import save_model
 
 def train(X_train, y_train, pipeline, param_grid, n_iter = 50, cv = 5):
     """Function that perform RandomizedSearchCV, fit model to data set, and return both model and the cross-validation dataframe."""
@@ -104,12 +108,10 @@ def main(training_data, test_data, models_to, tables_to):
     knn = knn_random_search.best_estimator_
 
     #save decision_tree model into the results/models file
-    with open(os.path.join(models_to, "decision_tree.pickle"), 'wb') as f:
-        pickle.dump(decision_tree, f)
+    save_model(decision_tree, f"{models_to}/decision_tree.pickle")
 
     #save knn_classifier_model results/models file
-    with open(os.path.join(models_to, "knn.pickle"), 'wb') as f:
-        pickle.dump(knn, f)
+    save_model(knn, f"{models_to}/knn.pickle")
 
     # Test on test set for both classification mode
 
