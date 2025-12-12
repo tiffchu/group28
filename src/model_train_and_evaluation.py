@@ -8,6 +8,8 @@ import pandas as pd
 import click
 import pickle
 import os
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+
 from src.save_model import save_model
 
 def train(X_train, y_train, pipeline, param_grid, n_iter = 50, cv = 5):
