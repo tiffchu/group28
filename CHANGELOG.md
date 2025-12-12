@@ -6,6 +6,6 @@ PR for the fix [here](https://github.com/tiffchu/group28/pull/68)
 
 PR for the [fix](https://github.com/tiffchu/group28/pull/75/commits/38c9ff4fe8a6e3bd4787ca2356fb5027b610d55e)
 
-3. Addressed absolute path related for Confusion matrix feedback from Jiro given [here] (https://github.com/UBC-MDS/data-analysis-review-2025/issues/12#issuecomment-3634454832)
+3. Addressed absolute path related for Confusion matrix feedback from Jiro given [here](https://github.com/UBC-MDS/data-analysis-review-2025/issues/12#issuecomment-3634454832)
 
-PR for the fix [here] (https://github.com/tiffchu/group28/pull/77)
+PR for the [fix](https://github.com/tiffchu/group28/pull/77)
