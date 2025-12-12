@@ -46,34 +46,9 @@ docker compose up
 make clean
 ```
 
-4. Now you can start running the analysis. Open terminal in JupyterLab and type the following command to download the Iris data.
-> Note: This will also create a `raw` folder and save the Iris data in that folder if raw folder doesn't exists. 
-> If no inputs were passed, it will automatically download data from `https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv` and save it as `./data/raw/iris.csv`
+4. To run the analysis in its entirety, enter the following command in the terminal in the project root:
 ```
-python src/download_data.py --url="https://raw.githubusercontent.com/mwaskom/seaborn-data/master/iris.csv" --path="./data/raw/iris.csv"
-```
-
-5. Next, run following command to split and preprocess the downloaded data.
-> Note: If no inputs were passed, raw data will be pulled from `./data/raw/iris.csv`. The split data will be saved into the `proprocessed` subfolder in `data` folder.
-> The script accepts optional `--test-size` and `--random-state` arguments, defaulting to a 70/30 train/test split with a random_state of 123.
-```
-python src/split_preprocess.py --rawdata="./data/raw/iris.csv" --path="./data/processed" --test-size=0.3 --random-state=123
-```
-
-6. Next, run the following command to generate EDA plots and save the plots as PNG file to `figure` subfolder in `Results` folder.
-> Note: If no inputs were passed, train data will be pulled from `./data/processed/` and the plots will be saved to `./results/figures/`
-```
-python src/eda.py --training-data="./data/processed/iris_train.csv" --plot-to="./results/figures/"
-```
-
-7. Next, run following command to train and evaluate model on train and test data set.
-> Note: If no inputs were passed, train and test data will be pulled from  `./data/processed/iris_train.csv` and `./data/processed/iris_test.csv`
-```
-python src/model_train_and_evaluation.py --training-data ./data/processed/iris_train.csv --test-data ./data/processed/iris_test.csv --models-to ./results/models --tables-to ./results/tables
-```
-8. Lastly, run the following command to render the report to HTML.
-```
-quarto render reports/iris_predictor_report.qmd --to html
+make all
 ```
 
 Navigate to `reports` to view the generated report file called `iris_predictor_report.html`
