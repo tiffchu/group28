@@ -16,9 +16,9 @@ def main(training_data, plot_to):
     '''
     train_data = pd.read_csv(training_data)
 
-    bar_plot = make_barplot(training_data, 'count()', 'Count', 'species', 'Species', 'species')
+    bar_plot = make_bar_plot(training_data, 'count()', 'Count', 'species', 'Species', 'species')
 
-    pairwise_plot = make_pairwise_plot(training_data, 'species', ['sepal_length', 'sepal_width', 'petal_length', 'petal_width'])
+    pairwise_plot = make_pairwise_plot(training_data, 'species', ['sepal_length', 'sepal_width', 'petal_length', 'petal_width'], ['sepal_length', 'sepal_width', 'petal_length', 'petal_width'])
     
     sepal_length_BP = make_boxplot(train_data, "sepal_length", "Sepal Length")
 
