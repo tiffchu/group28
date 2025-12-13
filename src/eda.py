@@ -19,7 +19,6 @@ def main(training_data, plot_to):
     bar_plot = make_bar_plot(train_data, 'count()', 'Count', 'species', 'Species', 'species')
 
     pairwise_plot = make_pairwise_plot(train_data, 'species', ['sepal_length', 'sepal_width', 'petal_length', 'petal_width'])
-    
     sepal_length_BP = make_boxplot(train_data, "sepal_length", "Sepal Length")
 
     sepal_width_BP = make_boxplot(train_data, "sepal_width", "Sepal Width")
@@ -28,10 +27,10 @@ def main(training_data, plot_to):
     
     petal_width_BP = make_boxplot(train_data, "petal_width", "Petal Width")
     
-    box_plot = (sepal_length_BP & sepal_width_BP & petal_length_BP & petal_width_BP).properties(
-        title = alt.TitleParams(
-            text = "Iris Feature Distributions by Species",
-            fontSize = 14))
+    box_plot = (sepal_length_BP & sepal_width_BP & petal_length_BP & petal_width_BP)#.properties(
+    #     title = alt.TitleParams(
+    #         text = "Iris Feature Distributions by Species",
+    #         fontSize = 14))
 
     os.makedirs(plot_to, exist_ok = True)
         
