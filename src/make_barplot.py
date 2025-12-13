@@ -11,5 +11,9 @@ def make_bar_plot(train_data, xVar, xLab, yVar, yLab, color):
                 domain=['setosa', 'versicolor', 'virginica'],
                 range=['blue', 'orange', 'green'])
             ).legend(None)
-        )
+        ).properties(
+        title = alt.TitleParams(
+            text = "Count of Iris Species",
+            anchor = 'start',
+            fontSize = 15))
     return barplot
