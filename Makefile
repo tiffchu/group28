@@ -1,5 +1,6 @@
 .DEFAULT_GOAL := help
-.PHONY: help target cl env build run up stop docker-build-push docker-build-local clean all
+.PHONY: help target cl env build run up stop docker-build-push docker-build-local clean all \
+		data processed figures models analysis report
 
 help: ## Show this help message
 	@echo "Available commands:"
@@ -96,3 +97,24 @@ clean:
 	rm -rf results/figures
 	rm -rf results
 	rm -rf reports/iris_predictor_report.html
+
+data: data/raw/iris.csv
+
+processed: data/processed/iris_test.csv data/processed/iris_train.csv
+
+figures: \
+	results/figures/iris_species_barplot.png \
+	results/figures/iris_species_boxplot.png \
+	results/figures/iris_species_pairwise.png
+
+models: \
+	results/models/decision_tree.pickle \
+	results/models/knn.pickle \
+	results/tables/confusion_matrix_ds.csv \
+	results/tables/confusion_matrix_knn.csv \
+	results/tables/ds_results.csv \
+	results/tables/knn_results.csv
+
+analysis: processed figures models
+
+report: reports/iris_predictor_report.html

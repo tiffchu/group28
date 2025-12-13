@@ -72,6 +72,9 @@ Sample command to create a virtual environment: `conda env create --name <my-env
 5. Update the `docker-compose.yml` file on your branch to use the new container image (make sure to update the tag specifically).
 6. Send a pull request to merge the changes into the `main` branch.
 
+### Running tests
+In the root of the directory, please run `pytest` to trigger the unit tests.
+
 ## Licenses
 This project is distributed under the licenses listed in `LICENSE`:
 
