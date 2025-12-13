@@ -20,7 +20,7 @@ This project investigates whether iris species can be predicted using sepal and 
 
 ## Introduction
 
-The Iris dataset is a well-known benchmark in machine learning, containing measurements of iris flowers collected to study how physical characteristics differ across species. This reseach is important as it reveals how petal/sepal measurements separate species, showing distinct patterns. Enabling us to conduct further research into resource efficiency and interpretability in biological studies, botany, and related scientific work.
+The Iris dataset is a well-known benchmark in machine learning, containing measurements of iris flowers collected to study how physical characteristics differ across species. This reseach is important as it reveals how petal/sepal measurements separate species, showing distinct patterns, enabling us to conduct further research into resource efficiency and interpretability in biological studies, botany, and related scientific work.
 
 ### Feature Summary
 There are 4 numerical features in this dataset:
@@ -100,7 +100,7 @@ Pairwise plots show the relationships between feature pair and show any clusters
 
 ## Model Training Results
 
-We tried 2 models, below are the results of each. This is after applying hyperparameter optimization to find the best `max_depth` and n_neighbours values. The cross-validation results show that Decision Trees with `max_depth` values from 4 to 18 fit the training data best while achieving high validation accuracy (94.3%) on unseen folds. While in the KNN hyperparameter tuning, findings show that choosing n_neighbors between 4 and 12 outputs a classification accuracy around 97% on cross-validation test scores. 
+We tried 2 models, below are the results of each. This is after applying hyperparameter optimization to find the best `max_depth` and `n_neighbours` values. The cross-validation results show that Decision Trees with `max_depth` values from 4 to 18 fit the training data best while achieving high validation accuracy (94.3%) on unseen folds. While in the KNN hyperparameter tuning, findings show that choosing `n_neighbors` between 4 and 12 outputs a classification accuracy around 97% on cross-validation test scores. 
 
 ![Decision Tree Confusion Matrix](../reports/figures/dt_confusion.png){#fig-dt_confusion width=80%}
 
@@ -116,7 +116,7 @@ To summarize the data, the Iris dataset consists of 150 samples with measurement
 In our exploratory data analysis (EDA), the summary statistics in @tbl-summary-numeric and @tbl-summary-species show that petal measurements (length and width) exhibit more obvious differences across species compared to sepal feature measurements. Sepal measurements are not as varied across species and thus provide weaker separation when distinguishing species. Our visualizations of pairwise feature plots in @fig-pairwise, and boxplots in @fig-boxplot confirm these patterns, they each reveal the power of petal measurement for distinguishing species during classification. Specifically, the boxplot shows how the species Setosa is easily distinguishable from just its petal measurements. 
 
 
-Both Decision Tree and KNN models perform strongly on this Iris test set (95% vs 93% accuracy, respectively). Petal and sepal feature differences allow decent separation between species, especially between the species Versicolor and Virginica. The misclassifications in confusion matrices show this overlap. The cross-validation results suggest that Decision Trees with max_depth values from 4 to 18 fit the training data perfectly while achieving similarly high validation accuracy (94.3%) on unseen folds. For the KNN hyperparameter tuning, findings show that choosing n_neighbors between 4 and 12 outputs a classification accuracy around 97% on cross-validation test scores. 
+Both Decision Tree and KNN models perform strongly on this Iris test set (95% vs 93% accuracy, respectively). Petal and sepal feature differences allow decent separation between species, especially between the species Versicolor and Virginica. The misclassifications in confusion matrices show this overlap. The cross-validation results suggest that Decision Trees with `max_depth` values from 4 to 18 fit the training data perfectly while achieving similarly high validation accuracy (94.3%) on unseen folds. For the KNN hyperparameter tuning, findings show that choosing `n_neighbors` between 4 and 12 outputs a classification accuracy around 97% on cross-validation test scores. 
 
 
 Examining our confusion matrix for model accuracies:
