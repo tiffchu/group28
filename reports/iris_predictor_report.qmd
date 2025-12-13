@@ -20,7 +20,7 @@ This project investigates whether iris species can be predicted using sepal and 
 
 ## Introduction
 
-The Iris dataset is a well-known benchmark in machine learning, containing measurements of iris flowers collected to study how physical characteristics differ across species. This reseach is imporant as it reveals how petal/sepal measurements separate species, showing distinct patterns. Enabling us to conduct further research into resource efficiency and interpretability in biological studies, botany, and related scientific work.
+The Iris dataset is a well-known benchmark in machine learning, containing measurements of iris flowers collected to study how physical characteristics differ across species. This reseach is important as it reveals how petal/sepal measurements separate species, showing distinct patterns. Enabling us to conduct further research into resource efficiency and interpretability in biological studies, botany, and related scientific work.
 
 ### Feature Summary
 There are 4 numerical features in this dataset:
@@ -85,7 +85,7 @@ From the above tables, we can see:
 
 ## EDA Plots
 
-Below are the plots visualize the underlying patterns, distributions, and relationships within the three features (`sepal_length`, `sepal_width`, `petal_length`, `petal_width`) in the Iris dataset. They each reveal the power of petal measurement for distinguishing species during classification. The boxplot shows how the species Setosa is easily distinguishable from just its petal measurements. 
+Below are the plots visualize the underlying patterns, distributions, and relationships within the four features (`sepal_length`, `sepal_width`, `petal_length`, `petal_width`) in the Iris dataset. They each reveal the power of petal measurement for distinguishing species during classification. The boxplot shows how the species Setosa is easily distinguishable from just its petal measurements. 
 
 
 ### Pairwise Plot
@@ -100,7 +100,7 @@ Pairwise plots show the relationships between feature pair and show any clusters
 
 ## Model Training Results
 
-We tried 2 models, below are the results of each. This is after applying hyperparameter optimization to find the best max_depth and n_neighbours values. The cross-validation results show that Decision Trees with max_depth values from 4 to 18 fit the training data best while achieving high validation accuracy (94.3%) on unseen folds. While in the KNN hyperparameter tuning, findings show that choosing n_neighbors between 4 and 12 outputs a classification accuracy around 97% on cross-validation test scores. 
+We tried 2 models, below are the results of each. This is after applying hyperparameter optimization to find the best `max_depth` and n_neighbours values. The cross-validation results show that Decision Trees with `max_depth` values from 4 to 18 fit the training data best while achieving high validation accuracy (94.3%) on unseen folds. While in the KNN hyperparameter tuning, findings show that choosing n_neighbors between 4 and 12 outputs a classification accuracy around 97% on cross-validation test scores. 
 
 ![Decision Tree Confusion Matrix](../reports/figures/dt_confusion.png){#fig-dt_confusion width=80%}
 
